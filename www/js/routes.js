@@ -76,7 +76,7 @@ angular.module('app.routes', [])
     controller: 'yourInterestsCtrl'
   })
 
-$urlRouterProvider.otherwise('/page8')
+$urlRouterProvider.otherwise('/page8')  //change index.html to log in page
 
   
 
