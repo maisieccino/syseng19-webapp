@@ -10,9 +10,9 @@ angular.module('app.routes', [])
     
   
 
-      .state('profile', {
+  .state('profile', {
     url: '/page3',
-    templateUrl: 'templates/profile.html',
+    templateUrl: 'templates/profile.html',  //指定template链接
     controller: 'profileCtrl'
   })
 
@@ -76,7 +76,7 @@ angular.module('app.routes', [])
     controller: 'yourInterestsCtrl'
   })
 
-$urlRouterProvider.otherwise('/page8')  //change index.html to log in page
+$urlRouterProvider.otherwise('/page6')  //change index.html to log in page
 
   
 

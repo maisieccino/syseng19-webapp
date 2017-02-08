@@ -24,19 +24,35 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('registerCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$http) {
+	$scope.user={
+		name:"" ,   //add attributes
+		email:"",
+		password:"",
+		repeatpassword:"",
+		position:"",
+		bio:""
+    }
+
+
+    $scope.submit=function(){
+    	console.log($scope.user.name);
+    }
+
 
 
 }])
    
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams, $state) {
+$scope.loginctl=function(){
+	$state.go('home');//if login successfully
+}
 
 }])
    
@@ -70,7 +86,8 @@ function ($scope, $stateParams) {
 function ($scope, $stateParams) {
 
 
-}])
+}
+])
    
 .controller('registerProgramCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -80,11 +97,15 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('yourInterestsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams,$state) {
+$scope.getback=function(){
+	// console.log("hello");
+	// add data as paramater of state.go
+	$state.go('registerProgram');
+}
 
 }])
  
