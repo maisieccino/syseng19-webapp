@@ -1,8 +1,9 @@
 /* Empty. Add your own CSS if you like */
+
 .thumbnail{
 	border-radius: 200px;
-    width: 170px;
-    height: 170px;
+    width: 150px;
+    height: 150px;
     background-size: 200px;
     background-position: right;
     border: 5px solid white;
@@ -11,8 +12,16 @@
 .profile-upper-section{
 	color: white;
 	text-align: center;
-	padding: 20px;
-	background-color: #87b1f9;
+	padding: 15px;
+	background: #a09ac0;
+	background: -webkit-linear-gradient(to left, #a09ac0  , #1ce);
+	background: linear-gradient(to left, #a09ac0  , #1ce);         
+}
+
+#side-menu-upper-section{
+	background: #a09ac0;
+	background: -webkit-linear-gradient(to left, #a09ac0  , #1ce);
+	background: linear-gradient(to left, #a09ac0  , #1ce);  
 }
 
 .skillbox{
