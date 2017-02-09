@@ -1,4 +1,4 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ngStorage'])  //inject for the using of $localstorage
   
 .controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -24,23 +24,50 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http) {
-	$scope.user={
-		name:"" ,   //add attributes
+function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
+	
+	$scope.user={   // Bind attribute with form data
+		name:"" ,   // Add attributes
 		email:"",
 		password:"",
 		repeatpassword:"",
 		position:"",
 		bio:""
-    }
+    };
+
+    $scope.register = function() {
+
+            var formData = {
+            	name: $scope.user.name,
+                email: $scope.user.email,
+                password: $scope.user.password,
+                repeatedpassword: $scope.user.repeatedpassword,
+                position: $scope.user.position,
+                bio: $scope.user.bio
+            }   //set form data
+
+            Auth.save(formData, function(res) {   //use the function save() from Auth service
+                if (res.type == false) {
+                    alert(res.data)
+                } else {
+                    $localStorage.token = res.data.token;
+                    window.location = "/"    
+                }
+            }, function() {
+                $rootScope.error = 'Failed to signup';
+               })
+            };
+
 
 
     $scope.submit=function(){
-    	console.log($scope.user.name);
-    }
+    	$localStorage.test=$scope.user.name;
+    	console.log($localStorage.test); //test for the using of $localStorage, does work!
+    	$localStorage.$reset();//delete everything in localstorage
+    };
 
 
 
