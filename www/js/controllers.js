@@ -72,40 +72,49 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('myMenteesCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+.controller('myMenteesCtrl', ['$scope', '$stateParams', 
+	// You can include any angular dependencies as parameters for this function
+	// TIP: Access Route Parameters for your page via $stateParams.parameterName
+	function ($scope, $stateParams) {
 
-
-}])
-   
-.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}
+	}
 ])
    
-.controller('registerProgramCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams',
+	function ($scope, $stateParams) {
+
+
+	}
+])
+   
+.controller('registerProgramCtrl', ['$scope', '$stateParams','$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
+function ($scope, $stateParams,$ionicHistory) {
+	$scope.getback=function(){
+		console.log("Back passed");
+		// add data as paramater of state.go
+		$ionicHistory.goBack();
+	}
 }])
    
-.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state) {
-$scope.getback=function(){
-	// console.log("hello");
-	// add data as paramater of state.go
-	$state.go('registerProgram');
-}
+.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state','$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+	// You can include any angular dependencies as parameters for this function
+	// TIP: Access Route Parameters for your page via $stateParams.parameterName
+	function ($scope, $stateParams,$state,$ionicHistory) {
+	$scope.getback=function(){
+		console.log("Back passed");
+		$ionicHistory.goBack();
+	}
+}])
 
+.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams','$state', '$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+	// You can include any angular dependencies as parameters for this function
+	// TIP: Access Route Parameters for your page via $stateParams.parameterName
+	function ($scope, $stateParams,$state,$ionicHistory){
+	$scope.getback=function(){
+		console.log("Back Passed!");
+		$ionicHistory.goBack();
+	}
 }])
  
