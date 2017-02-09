@@ -1,48 +1,48 @@
 <ion-view title="Mentor Match" id="page8">
   <ion-content padding="true" class="has-header has-footer">
-    <div class="list inset" ui-sref="learnFasterMentoring" id="home-card22">
+    <!-- Currently enrolled programs -->
+    <div class="list inset" id="home-card22">
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
-      <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
       <div class="item item-image">
         <img src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
       </div>
       <div class="item item-text-wrap">
         <h2>Learn Faster Mentoring</h2>
         <p>Short description for this program.</p>
+        <a ui-sref="learnFasterMentoring" class="button button-block button-positive button-outline"><i class="ion-ios-information-outline"></i> Find out more!</a>
       </div>
-      <!-- <h4 id="home-heading1" style="color:#000000;">You're participating in:</h4>
-      <ion-item class="item-thumbnail-left" id="home-list-item7" ui-sref="learnFasterMentoring">
-        <h2>Learn Faster Mentoring</h2>
-        <p>short description for this program</p>
-      </ion-item> -->
     </div>
-
+    <!-- Other programs -->
     <div class="list inset" id="home-card22" style="padding-bottom: 20px;">
       <div class="item item-divider" style="background-color: #d1eccb;">
-        You can enroll in
-      </div id="accelerate-talent" ui-sref="">
+        You are eligable to enroll in
+      </div>  
+      <div id="accelerate-talent">
         <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
-        <div>
         <div class="item item-image">
           <img src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
         </div>
         <div class="item item-text-wrap">
           <h2>Accelerate Talent Scheme</h2>
           <p>Short description for this program.</p>
+          <a ui-sref="" class="button button-block button-positive button-outline"><i class="ion-ios-information-outline"></i> Find out more!</a>
         </div>
       </div>
-      <div class="item item-image">
-        <img src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
-      </div>
-      <div class="item item-text-wrap">
-        <h2>Managed Services Talent Scheme</h2>
-        <p>Short description for this program.</p>
+      <div id="managed-services">  
+        <div class="item item-image">
+          <img src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2>Managed Services Talent Scheme</h2>
+          <p>Short description for this program.</p>
+          <a ui-sref="" class="button button-block button-positive button-outline"><i class="ion-ios-information-outline"></i> Find out more!</a>
+        </div>
       </div>
     </div>
   </ion-content>
-  
+
   <ion-tabs class="tabs-icon-top tabs-positive">
     <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
     <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
