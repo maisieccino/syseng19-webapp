@@ -6,7 +6,9 @@ angular.module('app.services', ['ngStorage'])
 
 
 .factory('Auth', ['$http', '$localStorage', function($http, $localStorage){      //factory for Auth
+        
         var baseUrl = "api.dev.mbell.me"; //set base URL 
+
         function changeUser(user) {
             angular.extend(currentUser, user);
         }
@@ -42,13 +44,10 @@ angular.module('app.services', ['ngStorage'])
 
         return {
             save: function(data, success, error) {     //used for register
-                $http.post(baseUrl + '/signin', data).success(success).error(error)
+                $http.post(baseUrl + '/signin', data).success(success).error(error)  //
             },
             signin: function(data, success, error) {
                 $http.post(baseUrl + '/authenticate', data).success(success).error(error)
-            },
-            me: function(success, error) {
-                $http.get(baseUrl + '/me').success(success).error(error)
             },
             logout: function(success) {
                 changeUser({});
@@ -59,6 +58,31 @@ angular.module('app.services', ['ngStorage'])
     }
 ])
 
+//app.config() could only use the provider serveice,
+// .provider('myinterceptor',function(){
+
+//     this.$get=function ($httpProvider,$localStorage,$state,$q) {  //拦截器,用来拦截请求并在header添加token
+           
+//             return {
+//                 'request': function (config) {  //
+//                     config.headers = config.headers || {};
+//                     if ($localStorage.token) {
+//                         config.headers.Authorization = 'Bearer ' + $localStorage.token;
+//                     }
+//                     return config;
+//                 },
+//                 'responseError': function(response) {
+//                     if(response.status === 401 || response.status === 403) {
+//                         // $state.go('login');  //因为报错,返回login page
+//                     }
+//                     return $q.reject(response);
+//                 }
+//             };//结束return
+
+//         }//结束interceptor push
+    
+
+// })
 
 
 

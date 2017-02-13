@@ -1,5 +1,6 @@
 angular.module('app.controllers', ['ngStorage'])  //inject for the using of $localstorage
-  
+
+
 .controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
@@ -62,12 +63,12 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
             };
 
 
-
-    $scope.submit=function(){
-    	$localStorage.test=$scope.user.name;
-    	console.log($localStorage.test); //test for the using of $localStorage, does work!
-    	$localStorage.$reset();//delete everything in localstorage
-    };
+    // <---testing code--->
+    // $scope.submit=function(){
+    // 	$localStorage.test=$scope.user.name;
+    // 	console.log($localStorage.test); //test for the using of $localStorage, does work!
+    // 	// $localStorage.$reset();//delete everything in localstorage
+    // };
 
 
 

@@ -6,6 +6,7 @@
     <button class="button button-icon icon No Icon"></button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
+
     <form id="register-form1" class="list" name="registerform" >  <!-- 表单 -->
       <ion-list id="register-list1">
         <label class="item item-input" id="register-input2">
@@ -34,8 +35,14 @@
         </label>
         <label class="item item-input" id="register-textarea2">
           <span class="input-label">Bio</span><textarea placeholder="Tell us about you and your interests." ng-model=bio></textarea></label>
+
+        
+    <a ui-sref="login" id="register-button1" class="button button-stable  button-block" ng-click="register()" ng-disabled="registerform.$invalid" >Register</a>
+
+
       </ion-list>
     </form>
-    <a ui-sref="login" id="register-button1" class="button button-stable  button-block" ng-click="submit()" ng-disabled="registerform.$invalid"  >Register</a>
+
+
   </ion-content>
 </ion-view>
