@@ -31,13 +31,13 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
                 },
                 'responseError': function(response) {
                     if(response.status === 401 || response.status === 403) {
-                        $injector.get('$state').transitionTo('login');  //因为报错,返回login page
+                        $injector.get('$state').transitionTo('login');  //因为报错或者token过期,返回login page
                     }
                     return $q.reject(response);
                 }
             };//结束return
 
-        }])//结束interceptor push
+        }])//结束service
 
      $httpProvider.interceptors.push('myinterceptor'); //结束interceptor push
     

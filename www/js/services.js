@@ -10,7 +10,7 @@ angular.module('app.services', ['ngStorage'])
         var baseUrl = "api.dev.mbell.me"; //set base URL 
 
         function changeUser(user) {
-            angular.extend(currentUser, user);
+            angular.extend(currentUser, user);  //currentuser引用user的对象 即空对象{}
         }
 
         function urlBase64Decode(str) {
