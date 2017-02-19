@@ -60,17 +60,20 @@ $scope.loginctl=function(){
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
-	$scope.test = "Testing text";
+	
 
 }])
    
-.controller('myMentorsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
+.controller('myMentorsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+	// You can include any angular dependencies as parameters for this function
+	// TIP: Access Route Parameters for your page via $stateParams.parameterName
+	function ($scope, $stateParams,$state) {
+		$scope.getback=function(){
+			console.log("Going Home");
+			$state.go('home');
+		}
+	}
+])
    
 .controller('myMenteesCtrl', ['$scope', '$stateParams', 
 	// You can include any angular dependencies as parameters for this function
