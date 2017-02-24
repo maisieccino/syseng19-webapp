@@ -89,12 +89,12 @@
 
       <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
         <div class="spacer" data-componentid="spacer2" style="width: 268px; height: 44px;"></div>
-        <a ui-sref="home" menu-close="" id="menu-button56" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-home" data-componentid="button56">Home</a>
-        <a ui-sref="profile" menu-close="" id="menu-button53" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-person" data-componentid="button53"> Profile</a>
-        <a ui-sref="contactPage" menu-close="" id="menu-button55" style="text-align:left;" class="button button-stable  button-block icon-left ion-ios-email" data-componentid="button55"> Contact</a>
-        <a ui-sref="myMentors" menu-close="" id="menu-button57" style="text-align:left;" class="button button-stable  button-block icon ion-android-contact" data-componentid="button57">My Mentor</a>
-        <a ui-sref="myMentees" menu-close="" id="menu-button58" style="text-align:left;" class="button button-stable  button-block icon ion-android-contacts" data-componentid="button58">My Mentees</a>
-        <a ui-sref="login" menu-close="" id="menu-button52" class="button button-dark  button-block" data-componentid="button52"> log out</a>
+        <a  menu-close="" id="menu-button56" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-home" data-componentid="button56" ng-click="gohome()">Home</a>
+        <a  menu-close="" id="menu-button53" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-person" data-componentid="button53" ng-click="goprofile()"> Profile</a>
+        <a  menu-close="" id="menu-button55" style="text-align:left;" class="button button-stable  button-block icon-left ion-ios-email" data-componentid="button55" ng-click="gocontact()"> Contact</a>
+        <a  menu-close="" id="menu-button57" style="text-align:left;" class="button button-stable  button-block icon ion-android-contact" data-componentid="button57" ng-click="gomymentors()">My Mentor</a>
+        <a  menu-close="" id="menu-button58" style="text-align:left;" class="button button-stable  button-block icon ion-android-contacts" data-componentid="button58" ng-click="gomyMentees()">My Mentees</a>
+        <a  menu-close="" id="menu-button52" class="button button-dark  button-block" data-componentid="button52" ng-click="gologin()"> log out</a>
       </ion-content>
     </ion-side-menu>
   </ion-side-menus>

@@ -4,6 +4,31 @@ angular.module('app.services', ['ngStorage'])
 
 }])
 
+.factory('Data', function(){
+       var current_program=undefined;    
+       var interests={};
+
+        return{
+            show_program:function(){
+                // return this.current_program;
+                return current_program;
+            },
+            set_current_program:function(da){
+                current_program=da;
+            },
+            show_interests:function(){
+                return this.interests;
+            }
+
+        }
+        
+
+
+})
+
+
+
+
 
 .factory('Auth', ['$http', '$localStorage', function($http, $localStorage){      //factory for Auth
         

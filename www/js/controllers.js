@@ -1,11 +1,28 @@
 angular.module('app.controllers', ['ngStorage'])  //inject for the using of $localstorage
 
 
-.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', '$stateParams', '$state','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams,$state,Data) {
+    $scope.gohome=function(){
+        $state.go('home');
+    }
+    $scope.goprofile=function(){
+        $state.go('profile');
+    }
+    $scope.gocontact=function(){
+        $state.go('contactPage');
+    }
+    $scope.gomymentors=function(){
+        $state.go('myMentors');
+    }
+    $scope.gomyMentees=function(){
+        $state.go('myMentees');
+    }
+    $scope.gologin=function(){
+        $state.go('login');
+    }
 
 }])
    
@@ -55,7 +72,7 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
                     alert(res.data)
                 } else {
                     $localStorage.token = res.data.token; //将服务器返回的token保存到本地
-                    window.location = "/"    
+                    $state.go('login'); 
                 }
             }, function() {
                 $rootScope.error = 'Failed to signup';
@@ -100,7 +117,7 @@ $scope.loginctl=function(){
             $localStorage.token=res.data.token;
             $state.go('login');
         }
-    },function(){  //signin函数的第三个参数
+    },function(){  //signin函数的第三个参数error
             $rootScope.error='Failed to login';
 
         }
@@ -112,12 +129,37 @@ $scope.loginctl=function(){
 };
 
 }])
-   
-.controller('homeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+  
+
+//Controller for home page 
+.controller('homeCtrl', ['$scope', '$stateParams','$rootScope','$state','$localStorage','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
+    $scope.learnFaster='true';
+    $scope.Accelerate='true';
+    $scope.manage='true';
 
+    $scope.learnFasterctrl=function(){
+        Data.set_current_program("LearnFaster");
+        console.log(Data.show_program());
+        $state.go('learnFasterMentoring');
+    }
+
+
+    $scope.Acceleratectrl=function(){
+        Data.set_current_program("Accelerate");
+        console.log(Data.show_program());
+        $state.go('learnFasterMentoring');
+        
+    }
+
+    $scope.Managectrl=function(){
+        Data.set_current_program("Manage");
+        console.log(Data.show_program());
+        $state.go('learnFasterMentoring');
+        
+    }
 
 }])
    
@@ -137,20 +179,36 @@ function ($scope, $stateParams) {
 
 }])
    
-.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams,$state,$rootScope,$localStorage,Data) {
+    var temp=Data.show_program();
+    $scope.program=temp;
+    console.log(temp);
+  
+
+    $scope.goregisterProgram=function(){
+        $state.go('registerProgram');
+     }
+    
 
 
 }
 ])
    
-.controller('registerProgramCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerProgramCtrl', ['$scope', '$stateParams','Data','$localStorage','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+function ($scope, $stateParams,Data,$localStorage,$state) {
+     console.log(Data.show_program());
+     $scope.gointerests=function(){
+        $state.go('yourInterests');
+     }
+     $scope.gohome=function(){
+        $state.go('home');
+     }
+     
 
 }])
    
