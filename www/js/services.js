@@ -6,7 +6,12 @@ angular.module('app.services', ['ngStorage'])
 
 .factory('Data', function(){
        var current_program=undefined;    
-       var interests={};
+       var interests=undefined;
+       var mentype="mentor";   //return "mentee" or "mentor" 
+       var selection=[];
+       // var times_per_week=undefined;
+       var times_per_week=undefined;
+
 
         return{
             show_program:function(){
@@ -17,8 +22,37 @@ angular.module('app.services', ['ngStorage'])
                 current_program=da;
             },
             show_interests:function(){
-                return this.interests;
+                return interests;
+            },
+            set_mentype:function(da){
+                mentype=da;
+            },
+            show_mentype:function(){
+                return mentype;
+            },
+            show_selection_index:function(interests){
+                return selection.indexOf(interests);
+            },
+            selection_delete:function(id){
+                selection.splice(id,1);
+            },
+            selection_add:function(interests){
+                selection.push(interests);
+            },
+            return_selection:function(){
+                return selection;
+            },
+            clear_selection: function(){
+                selection=[];
+            },
+            set_times_perweek: function(ab){
+                times_per_week=ab;
+            },
+            get_times_perweek: function(){
+                return times_per_week;
             }
+
+
 
         }
         

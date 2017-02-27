@@ -197,30 +197,105 @@ function ($scope, $stateParams,$state,$rootScope,$localStorage,Data) {
 }
 ])
    
-.controller('registerProgramCtrl', ['$scope', '$stateParams','Data','$localStorage','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerProgramCtrl', ['$scope', '$stateParams','Data','$localStorage','$state','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,Data,$localStorage,$state) {
+function ($scope, $stateParams,Data,$localStorage,$state,Data) {
      console.log(Data.show_program());
+     Data.set_mentype("mentor");  //reset mentype
+     console.log(Data.show_mentype());
+    
+     
+     // Data.set_mentype($scope.mymentype);
+     // console.log(Data.show_mentype());
      $scope.gointerests=function(){
         $state.go('yourInterests');
      }
      $scope.gohome=function(){
         $state.go('home');
      }
+     $scope.seta=function(){
+        Data.set_mentype("mentee");
+        console.log(Data.show_mentype());
+     }
+     $scope.setb=function(){
+        Data.set_mentype("mentor");
+        console.log(Data.show_mentype());
+     }
+    
+
+    //show all the form data 
+     console.log(Data.return_selection());
+     console.log(Data.Interests);
+     console.log(Data.get_times_perweek());
      
+
+
 
 }])
    
-.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', 'Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state) {
-$scope.getback=function(){
-	// console.log("hello");
-	// add data as paramater of state.go
+function ($scope, $stateParams,$state,Data) {
+    // console.log($scope.Interests);
+    // $scope.Interests="hello";
+    $scope.Interests=[
+    {text:"Face to Face", value: "face"},
+    {text:"E-mail", value: "email"},
+    {text:"Phone", value:"phone"}
+    ];
+
+    $scope.temp=[
+    {times_perweek:''}
+    ]
+
+    Data.clear_selection();//intialize the selection at the start.
+    $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
+    
+    $scope.toggleSelection=function toggleSelection(interests){
+        var idx=Data.show_selection_index(interests);
+        if (idx>-1) {
+            Data.selection_delete(idx); //删除
+        }
+        else{
+            Data.selection_add(interests);
+        }
+        console.log(Data.return_selection());
+
+    };
+    
+
+    $scope.Interests_Change = function(item) {
+    Data.Interests=item.value;
+    console.log(Data.Interests);
+    };
+
+
+
+
+    $scope.getback=function(){
+
+    var temp=$scope.temp.times_perweek; //Add times per week
+    Data.set_times_perweek(temp);
+
 	$state.go('registerProgram');
-}
+
+    }
 
 }])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
