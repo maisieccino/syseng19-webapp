@@ -2,20 +2,32 @@
   <ion-content padding="true" class="has-header">
     <div class="list card" id="home-card22">
       <h4 id="home-heading1" style="color:#000000;">You're participating in:</h4>
-      <ion-item class="item-thumbnail-left" id="home-list-item7" ui-sref="learnFasterMentoring">
+      <ion-item class="item-thumbnail-left" id="home-list-item7" ng-click="learnFasterctrl()" ng-show={{learnFaster}}>
         <h2>Learn Faster Mentoring</h2>
         <p>short description for this program</p>
       </ion-item>
+      <ion-item class="item-thumbnail-left" id="home-list-item11" ng-show={{Accelerate}} ng-click="Acceleratectrl()">
+              <h2>Accelerate Talent </h2>
+              <p>short description for this program</p>
+      </ion-item>
+      <ion-item class="item-thumbnail-left" id="home-list-item12" ng-show={{manage}} ng-click="Managectrl()">
+         <h2>Managed Services talent</h2>
+            <p>short description for this program</p>
+      </ion-item>
     </div>
     <div class="list card" id="home-card25">
-      <h4 id="home-heading14" style="color:#000000;">You can register for:</h4>
-      <ion-item class="item-thumbnail-left" id="home-list-item11">
-        <h2>Accelerate Talent </h2>
+         <h4 id="home-heading14" style="color:#000000;">You can register for:</h4>
+         <ion-item class="item-thumbnail-left" id="home-list-item7" ui-sref="learnFasterMentoring" ng-hide={{learnFaster}}>
+        <h2>Learn Faster Mentoring</h2>
         <p>short description for this program</p>
       </ion-item>
-      <ion-item class="item-thumbnail-left" id="home-list-item12">
-        <h2>Managed Services talent</h2>
-        <p>short description for this program</p>
+            <ion-item class="item-thumbnail-left" id="home-list-item11" ng-hide={{Accelerate}}>
+              <h2>Accelerate Talent </h2>
+              <p>short description for this program</p>
+           </ion-item>
+      <ion-item class="item-thumbnail-left" id="home-list-item12" ng-hide={{manage}}>
+         <h2>Managed Services talent</h2>
+            <p>short description for this program</p>
       </ion-item>
     </div>
   </ion-content>

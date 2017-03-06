@@ -1,4 +1,4 @@
-<ion-view title="Learn Faster Mentoring" id="page9">
+<ion-view title="{{program}}" id="page9">
   <ion-content padding="true" class="has-header">
     <h4 id="learnFasterMentoring-heading15" style="color:#000000;">Description</h4>
     <div id="learnFasterMentoring-markdown10" class="show-list-numbers-and-dots">
@@ -11,9 +11,8 @@
     <form id="learnFasterMentoring-form8" class="list">
       <label class="item item-input" id="learnFasterMentoring-input16">
         <span class="input-label">1</span>
-        <input type="text" placeholder="">
       </label>
     </form>
-    <a ui-sref="registerProgram" id="learnFasterMentoring-button59" class="button button-dark  button-block">Register here!</a>
+    <a ng-click="goregisterProgram()" id="learnFasterMentoring-button59" class="button button-dark  button-block">Register here!</a>
   </ion-content>
 </ion-view>

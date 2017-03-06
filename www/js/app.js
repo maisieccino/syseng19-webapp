@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services','ngStorage'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
   
@@ -13,6 +13,64 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 
 })
+
+
+.config(function ($httpProvider,$ionicConfigProvider,$provide) {  //拦截器,用来拦截请求并在header添加token
+
+    $provide.service('myinterceptor',['$localStorage','$q','$injector',function($localStorage,$q,$injector){
+
+        //拦截器,用来拦截请求并在header添加token
+           
+            return {
+                'request': function (config) {  //
+                    config.headers = config.headers || {};
+                    if ($localStorage.token) {
+                        config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                    }
+                    return config;
+                },
+                'responseError': function(response) {
+                    if(response.status === 401 || response.status === 403) {
+                        $injector.get('$state').transitionTo('login');  //因为报错或者token过期,返回login page
+                    }
+                    return $q.reject(response);
+                }
+            };//结束return
+
+        }])//结束service
+
+     $httpProvider.interceptors.push('myinterceptor'); //结束interceptor push
+    
+  }
+)//结束config
+
+
+// .config(['$httpProvider','$localStorage', function ($httpProvider,$localStorage) {
+
+//     var interceptor = ['$q', '$localStorage', '$state', '$injector', function($q, $localStorage, $state, $injector) {
+
+//         return {
+//                 'request': function (config) {  //
+//                     config.headers = config.headers || {};
+//                     if ($localStorage.token) {
+//                         config.headers.Authorization = 'Bearer ' + $localStorage.token;
+//                     }
+//                     return config;
+//                 },
+//                 'responseError': function(response) {
+//                     if(response.status === 401 || response.status === 403) {
+//                         $state.go('login');  //因为报错,返回login page
+//                     }
+//                     return $q.reject(response);
+//                 }
+//             };//结束return
+//     }];
+
+//     $httpProvider.interceptors.push(interceptor);
+// }])
+
+
+
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
