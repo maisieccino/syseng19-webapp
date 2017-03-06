@@ -3,30 +3,31 @@
     <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <form id="yourInterests-form13" class="list">
-      <label class="item item-input" id="yourInterests-search1">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Type to add an interest...">
-      </label>
-      <ion-checkbox id="yourInterests-checkbox7">Leadership</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox8">Security</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox9">Big data and analytics</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox10">Performance management</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox11">Microsoft Applications</ion-checkbox>
-    </form>
+
+    <h5>Interests</h5>
+    <ion-checkbox ng-repeat="interests in test1" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1">{{interests}}</ion-checkbox>
+
+
     <div class="spacer" style="width: 300px; height: 41px;"></div>
     <h5 id="yourInterests-heading12" style="color:#000000;">Contact types</h5>
-    <form id="yourInterests-form16" class="list">
-      <ion-radio id="yourInterests-radio8">Face to Face</ion-radio>
-      <ion-radio id="yourInterests-radio9">E-mail</ion-radio>
-      <ion-radio id="yourInterests-radio10">Phone</ion-radio>
-    </form>
+    
+
+    <ion-radio ng-repeat="item in Interests"
+               ng-value="item.value"
+               ng-model="Interests_Preference.data"
+               name="InterestsTest"
+               ng-change="Interests_Change(item)">
+      {{ item.text }}
+    </ion-radio>
+
+
+
     <div class="spacer" style="width: 300px; height: 35px;"></div>
     <h5 id="yourInterests-heading13" style="color:#000000;">For mentors only</h5>
     <form id="yourInterests-form17" class="list">
       <label class="item item-input" id="yourInterests-input23">
         <span class="input-label">How many meetings per week:</span>
-        <input type="text" placeholder="">
+        <input type="text" placeholder="" ng-model="temp.times_perweek">
       </label>
     </form>
   </ion-content>

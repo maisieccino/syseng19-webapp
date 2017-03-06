@@ -6,8 +6,14 @@
     <title></title>
 
     
-    
+    <script src="js/env.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+<!--     <script src="env.js"></script> -->
+
+
+    <!--  — add more libraries 新增-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -78,6 +84,7 @@
       <ion-header-bar class="bar-positive">
         <div class="title">Menu</div>
       </ion-header-bar>
+
       <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header">
         <div class="item item-avatar" id="side-menu-upper-section">
           <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg">
@@ -85,18 +92,12 @@
           <p style="color: white;">mike.andrews@atos.com</p>
         </div>
         <div class="list">
-          <a class="item item-icon-left" menu-close="" ui-sref="contactPage" style="text-align:left;"><i class="icon ion-ios-email"></i>Contact</a>
-          <a class="item item-icon-left" menu-close="" ui-sref="myMentors" style="text-align:left;"><i class="icon ion-android-contact"></i>My Mentors</a>
-          <a class="item item-icon-left" menu-close="" ui-sref="myMentees" style="text-align:left;"><i class="icon ion-android-contacts"></i>My Mentees</a>
-          <a class="item item-icon-left" menu-close="" ui-sref="" style="text-align:left;"><i class="icon ion-android-settings"></i>Settings</a>
-          <a class="item item-icon-left" menu-close="" ui-sref="login" style="text-align:left;"><i class="icon ion-log-out"></i>Logout</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gocontact()"><i class="icon ion-ios-email"></i>Contact</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomymentors()"><i class="icon ion-android-contact"></i>My Mentors</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomyMentees()"><i class="icon ion-android-contacts"></i>My Mentees</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;"><i class="icon ion-android-settings"></i>Settings</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gologin()"><i class="icon ion-log-out"></i>Logout</a>
         </div>
-        <!-- <div class="spacer" data-componentid="spacer2" style="width: 268px; height: 44px;"></div> -->
-        <!-- <a ui-sref="home" menu-close="" id="menu-button56" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-home" data-componentid="button56">Home</a>
-        <a ui-sref="profile" menu-close="" id="menu-button53" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-person" data-componentid="button53"> Profile</a>
-        <a ui-sref="contactPage" menu-close="" id="menu-button55" style="text-align:left;" class="button button-stable  button-block icon-left ion-ios-email" data-componentid="button55"> Contact</a>
-        <a ui-sref="myMentors" menu-close="" id="menu-button57" style="text-align:left;" class="button button-stable  button-block icon ion-android-contact" data-componentid="button57">My Mentor</a>
-        <a ui-sref="myMentees" menu-close="" id="menu-button58" style="text-align:left;" class="button button-stable  button-block icon ion-android-contacts" data-componentid="button58">My Mentees</a> -->
       </ion-content>
     </ion-side-menu>
   </ion-side-menus>
