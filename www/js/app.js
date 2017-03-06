@@ -17,7 +17,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
 
 .config(function ($httpProvider,$ionicConfigProvider,$provide) {  //拦截器,用来拦截请求并在header添加token
 
-    $provide.service('myinterceptor',['$localStorage','$q','$injector',function($httpProvider,$localStorage,$q,$injector){
+    $provide.service('myinterceptor',['$localStorage','$q','$injector',function($localStorage,$q,$injector){
 
         //拦截器,用来拦截请求并在header添加token
            

@@ -3,18 +3,7 @@
     <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'> Back</button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-<!-- 
-    <form id="yourInterests-form13" class="list">
-      <label class="item item-input" id="yourInterests-search1">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Type to add an interest...">
-      </label>
-      <ion-checkbox id="yourInterests-checkbox7">Leadership</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox8">Security</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox9">Big data and analytics</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox10">Performance management</ion-checkbox>
-      <ion-checkbox id="yourInterests-checkbox11">Microsoft Applications</ion-checkbox>
-    </form> -->
+
     <h5>Interests</h5>
     <ion-checkbox ng-repeat="interests in test1" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1">{{interests}}</ion-checkbox>
 

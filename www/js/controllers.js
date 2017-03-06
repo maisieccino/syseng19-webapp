@@ -1,10 +1,10 @@
 angular.module('app.controllers', ['ngStorage'])  //inject for the using of $localstorage
 
 
-.controller('menuCtrl', ['$scope', '$stateParams', '$state','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', '$stateParams', '$state','Data','$localStorage',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,Data) {
+function ($scope, $stateParams,$state,Data,$localStorage) {
     $scope.gohome=function(){
         $state.go('home');
     }
@@ -21,8 +21,10 @@ function ($scope, $stateParams,$state,Data) {
         $state.go('myMentees');
     }
     $scope.gologin=function(){
+        delete $localStorage.token;
         $state.go('login');
     }
+
 
 }])
    
@@ -67,15 +69,17 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
                 bio: $scope.user.bio
             }   //set form data
 
+
             Auth.save(formData, function(res) {   //use the function save() from Auth service
-                if (res.type == false) {
+                if (res.type == false) {  //function success callback
                     alert(res.data)
                 } else {
                     $localStorage.token = res.data.token; //将服务器返回的token保存到本地
                     $state.go('login'); 
                 }
-            }, function() {
-                $rootScope.error = 'Failed to signup';
+            }, function() {  //function 
+                // $rootScope.error = 'Failed to signup';
+                console.log("failed to sign up");
                })
             };
 
@@ -91,43 +95,72 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
 
 }])
    
-.controller('loginCtrl', ['$scope', '$stateParams', '$state','$localStorage','Auth','$rootScope',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$state','$localStorage','Auth','$rootScope','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope) {
-
-$scope.loginuser={
+function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
+    $scope.loginuser={
     emailaddress:'',
     password:''
-};
-
-$scope.loginctl=function(){
-	var logindata={
-        emailaddress: $scope.loginuser.emailaddress,
-        password:$scope.loginuser.password
     };
-    // console.log(logindata.emailaddress);
-    // console.log(logindata.password);
 
-    Auth.signin(logindata,function(res){
-        if (res.type==false) {
-            alert(res.data);
-        }
-        else{
-            $localStorage.token=res.data.token;
-            $state.go('login');
-        }
-    },function(){  //signin函数的第三个参数error
-            $rootScope.error='Failed to login';
+    // var logindata={
+    //     // emailaddress: $scope.loginuser.emailaddress,
+    //     // password:$scope.loginuser.password,
+    //     // grant_type:'password'
+    // };
+    var logindata="username="+"test@example.com"+"&password="+"hunter23"+"&grant_type=password";
 
-        }
 
-    )
+
+    // var client_id='jPgI9SZKPw02oGZB5e9kC86KgUHZL3G2adeE2iky';
+    // var client_password='5UynmKsl0Jmdvx5aUyqzBZTyyIwsI7XNSRzCgT1bv1vHhKCGBbudoQwKaZSig9LT51AxaM86TdpadvT8Zv6KPk4ZvsOd3z9Ks4eYlsoidQWYKKJzjoIyEvVuhrK5ubiJ';
+   
+    $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
+
+    $scope.loginctl=function(){ 
+         delete $localStorage.token;
+        var req = {
+            method: 'POST',
+            url: "https://api.dev.mbell.me/auth/token/",
+            headers: {
+                "Authorization": "Basic " + $scope.encoded,
+                "Content-type": "application/x-www-form-urlencoded; charset=utf-8",
+            },
+            data:logindata
+        };
+        $http(req).then(function(res){
+//             $http.defaults.headers.common.Authorization = 
+//               'Bearer ' + data.data.access_token;
+//             $cookies.put("access_token", data.data.access_token);
+//             window.location.href="index";
+            $localStorage.token=res.data.access_token; //store the returned token in localstorage
+            console.log($localStorage.token);
+            $state.go('home');
+        },function(res){
+        console.log(res);
+        }); }
+
+
+
+
+    // Auth.signin(logindata,function(res){
+    //     if (res.type==false) {
+    //         alert(res.data);
+    //     }
+    //     else{
+    //         $localStorage.token=res.data.token; //store the returned token in localstorage
+    //         $state.go('login');
+    //     }
+    // },function(){  //signin函数的第三个参数error
+    //         $rootScope.error='Failed to login';
+
+    //     }
+
+    // )
     
 
-    $state.go('home');//if login successfully
-};
-
+    // $state.go('home');//if login successfully
 }])
   
 
@@ -139,6 +172,7 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
     $scope.learnFaster='true';
     $scope.Accelerate='true';
     $scope.manage='true';
+
 
     $scope.learnFasterctrl=function(){
         Data.set_current_program("LearnFaster");
@@ -225,10 +259,18 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data) {
     
 
     //show all the form data 
-     console.log(Data.return_selection());
-     console.log(Data.Interests);
-     console.log(Data.get_times_perweek());
+     // console.log(Data.return_selection());
+     // console.log(Data.Interests);
+     // console.log(Data.get_times_perweek());
      
+     $scope.Final_Data={
+        program_name:Data.show_program(),
+        role:Data.show_mentype(),
+        selection:Data.return_selection(),
+        contact_type:Data.Interests,
+        times:Data.get_times_perweek()
+     }
+     console.log($scope.Final_Data);
 
 
 
@@ -241,7 +283,7 @@ function ($scope, $stateParams,$state,Data) {
     // console.log($scope.Interests);
     // $scope.Interests="hello";
     $scope.Interests=[
-    {text:"Face to Face", value: "face"},
+    {text:"Face to Face", value: "face to face"},
     {text:"E-mail", value: "email"},
     {text:"Phone", value:"phone"}
     ];

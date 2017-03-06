@@ -5,12 +5,11 @@ angular.module('app.services', ['ngStorage'])
 }])
 
 .factory('Data', function(){
-       var current_program=undefined;    
-       var interests=undefined;
-       var mentype="mentor";   //return "mentee" or "mentor" 
+       var current_program=null;    
+       var Interests=null;
+       var mentype="mentor";   //return "mentee" or "mentor"  itialised as "mentor"
        var selection=[];
-       // var times_per_week=undefined;
-       var times_per_week=undefined;
+       var times_per_week=null;
 
 
         return{
@@ -66,51 +65,15 @@ angular.module('app.services', ['ngStorage'])
 
 .factory('Auth', ['$http', '$localStorage', function($http, $localStorage){      //factory for Auth
         
-        var baseUrl = "api.dev.mbell.me"; //set base URL 
 
-        function changeUser(user) {
-            angular.extend(currentUser, user);  //currentuser引用user的对象 即空对象{}
-        }
-
-        function urlBase64Decode(str) {
-            var output = str.replace('-', '+').replace('_', '/');
-            switch (output.length % 4) {
-                case 0:
-                    break;
-                case 2:
-                    output += '==';
-                    break;
-                case 3:
-                    output += '=';
-                    break;
-                default:
-                    throw 'Illegal base64url string!';
-            }
-            return window.atob(output);
-        }
-
-        function getUserFromToken() {
-            var token = $localStorage.token;
-            var user = {};
-            if (typeof token !== 'undefined') {
-                var encoded = token.split('.')[1];
-                user = JSON.parse(urlBase64Decode(encoded));
-            }
-            return user;
-        }
-
-        var currentUser = getUserFromToken();
 
         return {
             save: function(data, success, error) {     //used for register
-                $http.post(baseUrl + '/signin', data).success(success).error(error)  //
-            },
-            signin: function(data, success, error) {
-                $http.post(baseUrl + '/authenticate', data).success(success).error(error)
+                $http.post('https://api.dev.mbell.me/', data).success(success).error(error)  //
             },
             logout: function(success) {
-                changeUser({});
                 delete $localStorage.token;
+                $state.go('login');
                 success();
             }
         };
