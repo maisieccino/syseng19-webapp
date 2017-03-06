@@ -103,21 +103,12 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
     emailaddress:'',
     password:''
     };
-
-    // var logindata={
-    //     // emailaddress: $scope.loginuser.emailaddress,
-    //     // password:$scope.loginuser.password,
-    //     // grant_type:'password'
-    // };
     var logindata="username="+"test@example.com"+"&password="+"hunter23"+"&grant_type=password";
 
-
-
-   
-   
     $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
 
     $scope.loginctl=function(){ 
+        console.log("I am logging in");
          delete $localStorage.token;
         var req = {
             method: 'POST',
@@ -129,10 +120,6 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
             data:logindata
         };
         $http(req).then(function(res){
-//             $http.defaults.headers.common.Authorization = 
-//               'Bearer ' + data.data.access_token;
-//             $cookies.put("access_token", data.data.access_token);
-//             window.location.href="index";
             $localStorage.token=res.data.access_token; //store the returned token in localstorage
             console.log($localStorage.token);
             $state.go('home');
@@ -140,26 +127,6 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
         console.log(res);
         }); }
 
-
-
-
-    // Auth.signin(logindata,function(res){
-    //     if (res.type==false) {
-    //         alert(res.data);
-    //     }
-    //     else{
-    //         $localStorage.token=res.data.token; //store the returned token in localstorage
-    //         $state.go('login');
-    //     }
-    // },function(){  //signin函数的第三个参数error
-    //         $rootScope.error='Failed to login';
-
-    //     }
-
-    // )
-    
-
-    // $state.go('home');//if login successfully
 }])
   
 
@@ -196,14 +163,19 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
 
 }])
    
-.controller('myMentorsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
    
+.controller('myMentorsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+	// You can include any angular dependencies as parameters for this function
+	// TIP: Access Route Parameters for your page via $stateParams.parameterName
+	function ($scope, $stateParams,$state) {
+		$scope.getback=function(){
+			console.log("Going Home");
+			$state.go('home');
+		}
+	}
+])
+   
+
 .controller('myMenteesCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
@@ -211,34 +183,35 @@ function ($scope, $stateParams) {
 
 
 }])
-   
-.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+
+.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data','$ionicHistory',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,$rootScope,$localStorage,Data) {
-    var temp=Data.show_program();
-    $scope.program=temp;
-    console.log(temp);
-  
-
-    $scope.goregisterProgram=function(){
-        $state.go('registerProgram');
-     }
-    
-
-
-}
+function ($scope, $stateParams,$state,$rootScope,$localStorage,Data,$ionicHistory) {
+        var temp=Data.show_program();
+        $scope.program=temp;
+        console.log(temp);  
+        $scope.longText = "This is a programme open to all Atos UK&amp;I staff (9000 people). Anyone can offer themselves as a mentor or request mentoring. It is the main use of the App. We are planning to open the offer for mentoring every quarter. You can request mentoring on up to 2 topics, but you can offer it on a wider range. If people need mentoring on more than 2 topics they should finish the mentoring on their top 2 proprieties and then go back and request another mentor in a later quarter, so they can do this as often as they like. As it is based around expertise and need it doesn’t matter if the mentor is more junior than the mentee, it’s all about what people know. Mentors should not have more than 2 mentees. Mentees should only have one mentor at a time from this scheme ";
+        $scope.goregisterProgram=function(){
+            $state.go('registerProgram');
+        }
+        $scope.getback=function(){
+            $state.go('home');
+        }
+	}
 ])
+
    
 .controller('registerProgramCtrl', ['$scope', '$stateParams','Data','$localStorage','$state','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,Data,$localStorage,$state,Data) {
+function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
      console.log(Data.show_program());
      Data.set_mentype("mentor");  //reset mentype
      console.log(Data.show_mentype());
-    
-     
+     $scope.getback=function(){
+        $state.go('learnFasterMentoring');
+     }
      // Data.set_mentype($scope.mymentype);
      // console.log(Data.show_mentype());
      $scope.gointerests=function(){
@@ -278,9 +251,7 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data) {
 .controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', 'Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,Data) {
-    // console.log($scope.Interests);
-    // $scope.Interests="hello";
+function ($scope, $stateParams,$state,Data,$ionicHistory) {
     $scope.Interests=[
     {text:"Face to Face", value: "face to face"},
     {text:"E-mail", value: "email"},
@@ -312,18 +283,12 @@ function ($scope, $stateParams,$state,Data) {
     console.log(Data.Interests);
     };
 
-
-
-
     $scope.getback=function(){
+        var temp=$scope.temp.times_perweek; //Add times per week
+        Data.set_times_perweek(temp);
 
-    var temp=$scope.temp.times_perweek; //Add times per week
-    Data.set_times_perweek(temp);
-
-	$state.go('registerProgram');
-
+    	$state.go('registerProgram');
     }
-
 }])
 
 

@@ -1,29 +1,44 @@
 <ion-view title="Profile" id="page3">
-  <ion-content padding="true" class="has-header">
-    <h3 id="profile-heading2" style="color:#247994;">Mike Zhou</h3>
-    <div class="item item-body" id="profile-list-item-container5">
-      <div id="profile-markdown6" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">Current role:</p>
-      </div>
-      <div id="profile-markdown7" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">My Mentees:</p>
-      </div>
+  <ion-content class="has-header has-footer">
+    <!-- Upper section of profile -->
+    <div class="profile-upper-section">
+      <img class="thumbnail" src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg">
+      <h4 style="color: white;" id="profile-heading2" >Mike Andrews</h4>
+      <p>Student intern with a passion for software development.</p>
     </div>
-    <div class="item item-body" id="profile-list-item-container6">
-      <div id="profile-markdown8" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">My Mentors:</p>
+    <div class="profile-lower-section" style="padding-bottom: 10px;">
+      <div class="item item-body" id="profile-list-item-container5">
+        <div id="profile-markdown6" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">Current role:</p>
+        </div>
       </div>
-      <div id="profile-markdown9" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">Goals:</p>
+      <div class="item item-body" id="profile-list-item-container6">
+        <div id="profile-markdown6" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">Enrolled in: </p>
+        </div>
       </div>
-    </div>
-    <div class="item item-body" id="profile-list-item-container7">
-      <div id="profile-markdown11" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">Skill 1:</p>
+      <div class="item item-body" id="profile-list-item-container7">
+        <div id="profile-markdown6" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">Mentors: </p>
+        </div>
       </div>
-      <div id="profile-markdown12" class="show-list-numbers-and-dots">
-        <p style="margin-top:0px;color:#000000;">Skill 2:</p>
+      <div class="item item-body" id="profile-list-item-container8">
+        <div id="profile-markdown6" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">Mentees:</p>
+        </div>
       </div>
+      <div class="item item-body" id="profile-list-item-container8">
+        <div id="profile-markdown6" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;">
+            Skills: <span class="skillbox">Java</span> <span class="skillbox">SQL</span> <span class="skillbox">Microsoft Word</span>
+          </p>
+        </div>
+      </div>  
     </div>
   </ion-content>
+  <ion-tabs class="tabs-icon-top tabs-positive">
+    <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
+    <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
+    <ion-tab title="Notifications" icon="ion-android-notifications" badge="3" badge style="badge-assertive" href=""></ion-tab>
+  </ion-tabs>
 </ion-view>
