@@ -113,8 +113,7 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
 
 
 
-    // var client_id='jPgI9SZKPw02oGZB5e9kC86KgUHZL3G2adeE2iky';
-    // var client_password='5UynmKsl0Jmdvx5aUyqzBZTyyIwsI7XNSRzCgT1bv1vHhKCGBbudoQwKaZSig9LT51AxaM86TdpadvT8Zv6KPk4ZvsOd3z9Ks4eYlsoidQWYKKJzjoIyEvVuhrK5ubiJ';
+   
    
     $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
 
