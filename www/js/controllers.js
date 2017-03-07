@@ -176,12 +176,14 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
 ])
    
 
-.controller('myMenteesCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('myMenteesCtrl', ['$scope', '$stateParams', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
+function ($scope, $stateParams,$state) {
+    $scope.getback=function(){
+        console.log("Going Home");
+        $state.go('home');
+    }
 }])
 
 .controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data','$ionicHistory',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -207,12 +209,14 @@ function ($scope, $stateParams,$state,$rootScope,$localStorage,Data,$ionicHistor
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
      console.log(Data.show_program());
-     Data.set_mentype("mentor");  //reset mentype
+     // Data.set_mentype("mentor");  //reset mentype
      console.log(Data.show_mentype());
      $scope.getback=function(){
         $state.go('learnFasterMentoring');
      }
      // Data.set_mentype($scope.mymentype);
+     $scope.mymentype= String(Data.show_mentype());
+     //console.log($scope.mymentype);
      // console.log(Data.show_mentype());
      $scope.gointerests=function(){
         $state.go('yourInterests');
@@ -228,8 +232,8 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
         Data.set_mentype("mentor");
         console.log(Data.show_mentype());
      }
-    
-
+    $scope.roleType=String(Data.show_mentype());
+    $scope.isMentor= ($scope.roleType)==='mentor' ? true : false;
     //show all the form data 
      // console.log(Data.return_selection());
      // console.log(Data.Interests);
@@ -253,9 +257,9 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,$state,Data,$ionicHistory) {
     $scope.Interests=[
-    {text:"Face to Face", value: "face to face"},
-    {text:"E-mail", value: "email"},
-    {text:"Phone", value:"phone"}
+    {text:"Face to Face", value: "face to face",icon:"ion-ios-videocam"},
+    {text:"E-mail", value: "email",icon:"icon ion-email"},
+    {text:"Phone", value:"phone",icon:"icon ion-ios-telephone-outline"}
     ];
 
     $scope.temp=[
@@ -263,6 +267,9 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
     ]
 
     Data.clear_selection();//intialize the selection at the start.
+    $scope.roleType=String(Data.show_mentype());
+    $scope.isMentor= ($scope.roleType)==='mentor' ? true : false;
+    console.log($scope.isMentor);
     $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
     
     $scope.toggleSelection=function toggleSelection(interests){
