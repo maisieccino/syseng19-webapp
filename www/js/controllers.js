@@ -277,6 +277,10 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
     console.log($scope.isMentor);
     $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
     
+    $scope.gohome=function(){
+        $state.go('home');
+     }
+     
     $scope.toggleSelection=function toggleSelection(interests){
         var idx=Data.show_selection_index(interests);
         if (idx>-1) {
