@@ -18,13 +18,13 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
+    <link href="css/ionic.app.css" rel="stylesheet">   
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google fonts -->
+     <link href="https://fonts.googleapis.com/css?family=Crete+Round|Francois+One" rel="stylesheet">
 
     <style type="text/css">
       .platform-ios .manual-ios-statusbar-padding{
@@ -75,7 +75,7 @@
   <!-- <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21"> -->
   <ion-side-menus enable-menu-with-back-views="true" data-componentid="side-menu21">
     <ion-side-menu-content>
-      <ion-nav-bar class="bar-dark">
+      <ion-nav-bar class="bar-positive">
         <!-- <ion-nav-back-button></ion-nav-back-button> -->
         <ion-nav-buttons side="left">
           <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -84,18 +84,23 @@
       <ion-nav-view></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu side="left" id="side-menu21">
-      <ion-header-bar class="bar-dark">
+      <ion-header-bar class="bar-positive">
         <div class="title">Menu</div>
       </ion-header-bar>
 
-      <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header ">
-        <div class="spacer" data-componentid="spacer2" style="width: 268px; height: 44px;"></div>
-        <a  menu-close="" id="menu-button56" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-home" data-componentid="button56" ng-click="gohome()">Home</a>
-        <a  menu-close="" id="menu-button53" style="text-align:left;" class="button button-stable  button-block icon-left ion-android-person" data-componentid="button53" ng-click="goprofile()"> Profile</a>
-        <a  menu-close="" id="menu-button55" style="text-align:left;" class="button button-stable  button-block icon-left ion-ios-email" data-componentid="button55" ng-click="gocontact()"> Contact</a>
-        <a  menu-close="" id="menu-button57" style="text-align:left;" class="button button-stable  button-block icon ion-android-contact" data-componentid="button57" ng-click="gomymentors()">My Mentor</a>
-        <a  menu-close="" id="menu-button58" style="text-align:left;" class="button button-stable  button-block icon ion-android-contacts" data-componentid="button58" ng-click="gomyMentees()">My Mentees</a>
-        <a  menu-close="" id="menu-button52" class="button button-dark  button-block" data-componentid="button52" ng-click="gologin()"> log out</a>
+      <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header">
+        <div class="item item-avatar" id="side-menu-upper-section">
+          <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg">
+          <h2 style="color: white;"><strong>Mike Andrews</strong></h2>
+          <p style="color: white;">mike.andrews@atos.com</p>
+        </div>
+        <div class="list">
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gocontact()"><i class="icon ion-ios-email"></i>Contact</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomymentors()"><i class="icon ion-android-contact"></i>My Mentors</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomyMentees()"><i class="icon ion-android-contacts"></i>My Mentees</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;"><i class="icon ion-android-settings"></i>Settings</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gologin()"><i class="icon ion-log-out"></i>Logout</a>
+        </div>
       </ion-content>
     </ion-side-menu>
   </ion-side-menus>

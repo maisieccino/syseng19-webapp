@@ -1,34 +1,94 @@
-<ion-view title="Home" id="page8">
-  <ion-content padding="true" class="has-header">
-    <div class="list card" id="home-card22">
-      <h4 id="home-heading1" style="color:#000000;">You're participating in:</h4>
-      <ion-item class="item-thumbnail-left" id="home-list-item7" ng-click="learnFasterctrl()" ng-show={{learnFaster}}>
-        <h2>Learn Faster Mentoring</h2>
-        <p>short description for this program</p>
-      </ion-item>
-      <ion-item class="item-thumbnail-left" id="home-list-item11" ng-show={{Accelerate}} ng-click="Acceleratectrl()">
-              <h2>Accelerate Talent </h2>
-              <p>short description for this program</p>
-      </ion-item>
-      <ion-item class="item-thumbnail-left" id="home-list-item12" ng-show={{manage}} ng-click="Managectrl()">
-         <h2>Managed Services talent</h2>
-            <p>short description for this program</p>
-      </ion-item>
+<ion-view title="Mentor Match" id="page8">
+  <ion-content padding="true" class="has-header has-footer">
+    <!-- Currently enrolled programs -->
+    <div class="card" id="home-card22" ng-hide="false">
+      <div class="item item-divider" style="background-color: #cfdef8;">
+        You are currently enrolled in
+      </div>
+      <div ng-show={{learnFaster}}>
+      <div class="item item-image" >
+        <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
+      </div>
+      <div class="item item-text-wrap">
+        <h2><strong>Learn Faster Mentoring</strong></h2>
+        <p>Short description for this program.</p>
+        <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+      </div>
+      </div> <!-- finish ng-show -->
+
+      <div  ng-show={{Accelerates}}>
+        <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
+        <div class="item item-image">
+          <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Accelerate Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Acceleratectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
+
+      <div ng-show={{manage}}>  
+        <div class="item item-image">
+          <img ng-src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Managed Services Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
+
+
+
     </div>
-    <div class="list card" id="home-card25">
-         <h4 id="home-heading14" style="color:#000000;">You can register for:</h4>
-         <ion-item class="item-thumbnail-left" id="home-list-item7" ui-sref="learnFasterMentoring" ng-hide={{learnFaster}}>
-        <h2>Learn Faster Mentoring</h2>
-        <p>short description for this program</p>
-      </ion-item>
-            <ion-item class="item-thumbnail-left" id="home-list-item11" ng-hide={{Accelerate}}>
-              <h2>Accelerate Talent </h2>
-              <p>short description for this program</p>
-           </ion-item>
-      <ion-item class="item-thumbnail-left" id="home-list-item12" ng-hide={{manage}}>
-         <h2>Managed Services talent</h2>
-            <p>short description for this program</p>
-      </ion-item>
+    <!-- Other programs -->
+    <div class="card" id="home-card22" style="padding-bottom: 20px;">
+      <div class="item item-divider" style="background-color: #d1eccb;">
+        You are eligable to enroll in
+      </div>  
+
+      <div ng-hide={{learnFaster}}>
+      <div class="item item-image" >
+        <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
+      </div>
+      <div class="item item-text-wrap">
+        <h2><strong>Learn Faster Mentoring</strong></h2>
+        <p>Short description for this program.</p>
+        <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+      </div>
+      </div> <!-- finish ng-show -->
+
+
+
+
+      <div id="accelerate-talent" ng-hide={{Accelerates}}>
+        <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
+        <div class="item item-image">
+          <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Accelerate Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Acceleratectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
+      <div id="managed-services" ng-hide={{manage}}>  
+        <div class="item item-image">
+          <img ng-src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Managed Services Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
     </div>
   </ion-content>
+
+  <ion-tabs class="tabs-icon-top tabs-positive">
+    <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
+    <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
+    <ion-tab title="Notifications" icon="ion-android-notifications" badge="3" badge style="badge-assertive" href=""></ion-tab>
+  </ion-tabs>
 </ion-view>

@@ -10,6 +10,11 @@ angular.module('app.services', ['ngStorage'])
        var mentype="mentor";   //return "mentee" or "mentor"  itialised as "mentor"
        var selection=[];
        var times_per_week=null;
+       var program_isregistered={
+        learnFaster:"false",
+        Accelerates:"false",
+        manage:"false"
+       };
 
 
         return{
@@ -49,8 +54,26 @@ angular.module('app.services', ['ngStorage'])
             },
             get_times_perweek: function(){
                 return times_per_week;
-            }
+            },
 
+            get_isregistered_learnFatser: function(){
+                return program_isregistered.learnFaster;
+            },
+            get_isregistered_Accelerates: function(){
+                return program_isregistered.Accelerates;
+            },
+            get_isregistered_manage: function(){
+                return program_isregistered.manage;
+            },
+
+            // I added this to reset settings when users decide to change their minds and click the back button 
+            reset_settings: function(){
+                current_program=current_program;    
+                Interests=null;
+                mentype="mentor";   //return "mentee" or "mentor"  itialised as "mentor"
+                selection=[];
+                times_per_week=null;
+            }
 
 
         }

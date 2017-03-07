@@ -1,18 +1,34 @@
-<ion-view title="{{program}}" id="page9">
-  <ion-content padding="true" class="has-header">
-    <h4 id="learnFasterMentoring-heading15" style="color:#000000;">Description</h4>
-    <div id="learnFasterMentoring-markdown10" class="show-list-numbers-and-dots">
-      <p style="color:#000000;">This is a programme open to all Atos UK&amp;I staff (9000 people). Anyone can offer themselves as a mentor or request mentoring. It is the main use of the App. We are planning to open the offer for mentoring every quarter. You can request mentoring
-        on up to 2 topics, but you can offer it on a wider range. If people need mentoring on more than 2 topics they should finish the mentoring on their top 2 proprieties and then go back and request another mentor in a later quarter, so they can do
-        this as often as they like. As it is based around expertise and need it doesn’t matter if the mentor is more junior than the mentee, it’s all about what people know. Mentors should not have more than 2 mentees. Mentees should only have one mentor
-        at a time from this scheme</p>
+<ion-view title={{program}} id="page9">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <div class="program-banner" style="top:-10px;">  
+      <img ng-src='img/accelerate-program.jpg' />    
+      <div class='program-caption'>    
+        <p class='program-caption-content'>What is Learn Faster Mentoring?</p>    
+      </div>   
     </div>
-    <h4 id="learnFasterMentoring-heading9" style="color:#000000;">capacity remained</h4>
-    <form id="learnFasterMentoring-form8" class="list">
-      <label class="item item-input" id="learnFasterMentoring-input16">
-        <span class="input-label">1</span>
-      </label>
-    </form>
-    <a ng-click="goregisterProgram()" id="learnFasterMentoring-button59" class="button button-dark  button-block">Register here!</a>
+    <div class="program-description-section">
+      <h4 id="learnFasterMentoring-heading15" style="color:#000000;">Description</h4>
+      <div id="learnFasterMentoring-markdown10" class="show-list-numbers-and-dots">
+        <!-- <p style="color:#000000;">{{description}}</p> -->
+        <p style="color:#000000;" dd-text-collapse dd-text-collapse-max-length="350" dd-text-collapse-text="{{ longText }}"></p>
+      </div>
+      <div class="list">
+        <p class="item item-icon-left">
+          <i class="icon ion-ios-people"></i><span style="font-weight: bold;">Remaining Spots</span><span class="badge badge-assertive">5</span> 
+        </p>
+      </div>
+      <!-- <h4 id="learnFasterMentoring-heading9" style="color:#000000;">Remaining Spaces</h4>
+      <form id="learnFasterMentoring-form8" class="list">
+        <label class="item item-input" id="learnFasterMentoring-input16">
+          <span class="input-label">1</span>
+          <input type="text" placeholder="">
+        </label>
+      </form> -->
+      <a ng-click="goregisterProgram()" id="learnFasterMentoring-button59" class="button button-block button-positive">Register here!</a>
+    </div>
   </ion-content>
 </ion-view>
+

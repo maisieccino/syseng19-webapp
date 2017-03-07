@@ -1,1 +1,83 @@
 /* Empty. Add your own CSS if you like */
+
+/* Login Page */
+.title-name{
+    font-family: 'Francois One', sans-serif;
+    font-family: 'Crete Round', serif;
+}
+
+/* Register Page */
+#register-card{
+    background-color: grey;
+}
+
+/*Profile Page*/
+.thumbnail{
+	border-radius: 200px;
+    width: 150px;
+    height: 150px;
+    background-size: 200px;
+    background-position: right;
+    border: 5px solid white;
+}
+
+.profile-upper-section{
+	color: white;
+	text-align: center;
+	padding: 15px;
+	background: #a09ac0;
+	background: -webkit-linear-gradient(to left, #a09ac0  , #1ce);
+	background: linear-gradient(to left, #a09ac0  , #1ce);         
+}
+
+.skillbox{
+	border:1px solid red;
+	border-radius: 3px;
+	color: red;
+	padding: 8px;
+}
+
+/*Side Menu*/
+#side-menu-upper-section{
+	background: #a09ac0;
+	background: -webkit-linear-gradient(to left, #a09ac0  , #1ce);
+	background: linear-gradient(to left, #a09ac0  , #1ce);  
+}
+
+/*Program Info Pages*/
+div.program-banner{
+	top: 0px;
+    float:left; /* important */  
+    width: 100%;
+    max-height: 210px;
+    position:relative; /* important(so we can absolutely position the description div */  
+}
+
+div.program-caption{  
+    position:absolute; /* absolute position (so we can position it where we want) */ 
+    bottom:0px; /* position will be on bottom   */
+    left:0px;  
+    width:100%;  
+    /* styling bellow */  
+    background-color:black;  
+    font-family: 'tahoma';  
+    font-size:15px;  
+    color:white;  
+    opacity:0.6; /* transparency */  
+    filter:alpha(opacity=60); /* IE transparency */  
+}    
+
+p.program-caption-content{  
+	text-align: center;
+	font-weight: bold;
+    padding:15px 0 15px 0;  
+    margin:0px;  
+} 
+
+.program-description-section{
+	padding: 10px;
+}
+
+.collapse-text-toggle{
+	font-weight: bold;
+}
