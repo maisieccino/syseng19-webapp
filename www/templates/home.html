@@ -1,11 +1,12 @@
 <ion-view title="Mentor Match" id="page8">
   <ion-content padding="true" class="has-header has-footer">
     <!-- Currently enrolled programs -->
-    <div class="card" id="home-card22">
+    <div class="card" id="home-card22" ng-hide="false">
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
-      <div class="item item-image">
+      <div ng-show={{learnFaster}}>
+      <div class="item item-image" >
         <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
       </div>
       <div class="item item-text-wrap">
@@ -13,13 +14,9 @@
         <p>Short description for this program.</p>
         <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
       </div>
-    </div>
-    <!-- Other programs -->
-    <div class="card" id="home-card22" style="padding-bottom: 20px;">
-      <div class="item item-divider" style="background-color: #d1eccb;">
-        You are eligable to enroll in
-      </div>  
-      <div id="accelerate-talent">
+      </div> <!-- finish ng-show -->
+
+      <div  ng-show={{Accelerates}}>
         <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
         <div class="item item-image">
           <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
@@ -30,7 +27,53 @@
           <a ng-click="Acceleratectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
         </div>
       </div>
-      <div id="managed-services">  
+
+      <div ng-show={{manage}}>  
+        <div class="item item-image">
+          <img ng-src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Managed Services Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
+
+
+
+    </div>
+    <!-- Other programs -->
+    <div class="card" id="home-card22" style="padding-bottom: 20px;">
+      <div class="item item-divider" style="background-color: #d1eccb;">
+        You are eligable to enroll in
+      </div>  
+
+      <div ng-hide={{learnFaster}}>
+      <div class="item item-image" >
+        <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
+      </div>
+      <div class="item item-text-wrap">
+        <h2><strong>Learn Faster Mentoring</strong></h2>
+        <p>Short description for this program.</p>
+        <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+      </div>
+      </div> <!-- finish ng-show -->
+
+
+
+
+      <div id="accelerate-talent" ng-hide={{Accelerates}}>
+        <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
+        <div class="item item-image">
+          <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
+        </div>
+        <div class="item item-text-wrap">
+          <h2><strong>Accelerate Talent Scheme</strong></h2>
+          <p>Short description for this program.</p>
+          <a ng-click="Acceleratectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+        </div>
+      </div>
+      <div id="managed-services" ng-hide={{manage}}>  
         <div class="item item-image">
           <img ng-src="http://vanguem.ru/wp-content/uploads/2015/01/povyshenie-po-sluzhbe.jpg" alt="Item img">
         </div>
