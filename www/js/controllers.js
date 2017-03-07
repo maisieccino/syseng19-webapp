@@ -138,9 +138,9 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
-    $scope.learnFaster='true';
-    $scope.Accelerate='true';
-    $scope.manage='true';
+    $scope.learnFaster=Data.get_isregistered_learnFatser();
+    $scope.Accelerates=Data.get_isregistered_Accelerates();
+    $scope.manage=Data.get_isregistered_manage();
 
 
     $scope.learnFasterctrl=function(){
