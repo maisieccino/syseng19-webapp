@@ -1,5 +1,16 @@
 /* Empty. Add your own CSS if you like */
 
+/* Login Page */
+.title-name{
+    font-family: 'Francois One', sans-serif;
+    font-family: 'Crete Round', serif;
+}
+
+/* Register Page */
+#register-card{
+    background-color: grey;
+}
+
 /*Profile Page*/
 .thumbnail{
 	border-radius: 200px;

@@ -83,7 +83,10 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
                })
             };
 
-
+    $scope.backToLogin=function(){
+            console.log("Going to Login");
+            $state.go('login');
+    }        
     // <---testing code--->
     // $scope.submit=function(){
     // 	$localStorage.test=$scope.user.name;
@@ -213,6 +216,8 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
      console.log(Data.show_mentype());
      $scope.getback=function(){
         $state.go('learnFasterMentoring');
+        Data.reset_settings();
+        console.log("Settings reset");
      }
      // Data.set_mentype($scope.mymentype);
      $scope.mymentype= String(Data.show_mentype());

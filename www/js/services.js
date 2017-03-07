@@ -49,8 +49,15 @@ angular.module('app.services', ['ngStorage'])
             },
             get_times_perweek: function(){
                 return times_per_week;
+            },
+            // I added this to reset settings when users decide to change their minds and click the back button 
+            reset_settings: function(){
+                current_program=current_program;    
+                Interests=null;
+                mentype="mentor";   //return "mentee" or "mentor"  itialised as "mentor"
+                selection=[];
+                times_per_week=null;
             }
-
 
 
         }

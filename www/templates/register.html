@@ -1,47 +1,51 @@
 <ion-view title="Register" id="page5">
-  <ion-nav-buttons side="left" class="has-header">
-    <button class="button button-icon icon No Icon"></button>
+   <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='backToLogin()'></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right" class="has-header">
     <button class="button button-icon icon No Icon"></button>
   </ion-nav-buttons>
-  <ion-content padding="true" class="has-header">
-
-    <form id="register-form1" class="list" name="registerform" >  <!-- 表单 -->
-      <ion-list id="register-list1">
-        <label class="item item-input" id="register-input2">
-          <span class="input-label">Your Name</span>
-          <input type="text" placeholder="" ng-model=user.name required="true"> <!--  testing -->
-        </label>
-        <label class="item item-input" id="register-input9">
-          <span class="input-label">Email Address</span>
-          <input type="email" placeholder="" ng-model=user.email required="true">
-        </label>
-        <label class="item item-input" id="register-input3">
-          <span class="input-label">Password</span>
-          <input type="password" placeholder="" ng-model=user.password required="true">
-        </label>
-        <label class="item item-input" id="register-input12">
-          <span class="input-label">Repeat Password</span>
-          <input type="password" placeholder="" ng-model=user.repeatpassword required="true">
-        </label>
-        <label class="item item-input" id="register-input1">
-          <span class="input-label">Position</span>
-          <input type="text" placeholder="What you do at Atos." ng-model=user.position required="true">
-        </label>
-        <label class="item item-input" id="register-input8">
-          <span class="input-label">Join Date</span>
-          <input type="date" placeholder="" ng-model=join_date required="trur">
-        </label>
-        <label class="item item-input" id="register-textarea2">
-          <span class="input-label">Bio</span><textarea placeholder="Tell us about you and your interests." ng-model=bio ></textarea></label>
-
-        
-    <a id="register-button1" class="button button-stable  button-block" ng-click="register()" ng-disabled="registerform.$invalid" >Register</a>
-
-
-      </ion-list>
-    </form>
+  <ion-content padding="true" class="has-header" style="background-color: #7ec9f8;">
+  <div class="card" id="register-card">
+    <div class="item">
+      <div class="spacer" style="height: 15px;"></div>
+      <p class="title-name" style="text-align: center; font-size: 28px;">ATOS Mentor Match</p>
+      <div class="spacer" style="height: 15px;"></div>
+      <form id="register-form1" name="registerform" >  <!-- 表单 -->
+        <div class="card list" >
+          <ion-list id="register-list1">
+            <label class="item item-input" id="register-input2">
+              <span class="input-label">Name</span>
+              <input type="text" placeholder="" ng-model=user.name required="true"> <!--  testing -->
+            </label>
+            <label class="item item-input" id="register-input9">
+              <span class="input-label">Email Address</span>
+              <input type="email" placeholder="" ng-model=user.email required="true">
+            </label>
+            <label class="item item-input" id="register-input3">
+              <span class="input-label">Password</span>
+              <input type="password" placeholder="" ng-model=user.password required="true">
+            </label>
+            <label class="item item-input" id="register-input12">
+              <span class="input-label">Confirm Password</span>
+              <input type="password" placeholder="" ng-model=user.repeatpassword required="true">
+            </label>
+            <label class="item item-input" id="register-input1">
+              <span class="input-label">Position</span>
+              <input type="text" placeholder="Current position at Atos." ng-model=user.position required="true">
+            </label>
+            <label class="item item-input" id="register-input8">
+              <span class="input-label">Join Date</span>
+              <input type="date" placeholder="" ng-model=join_date required="trur">
+            </label>
+            <label class="item item-input" id="register-textarea2">
+              <span class="input-label">Bio</span><textarea placeholder="A short bio about yourself." ng-model=bio ></textarea></label>
+        </div>  
+        <a id="register-button1" class="button button-positive button-block" ng-click="register()" ng-disabled="registerform.$invalid" >Register</a>
+        </ion-list>
+      </form>
+    </div>
+  </div>
 
 
   </ion-content>
