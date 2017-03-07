@@ -4,31 +4,30 @@
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
 
-    <h5>Interests</h5>
+    <h4><i class="icon ion-star"></i> Interests</h4>
     <ion-checkbox ng-repeat="interests in test1" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1">{{interests}}</ion-checkbox>
 
-
-    <div class="spacer" style="width: 300px; height: 41px;"></div>
-    <h5 id="yourInterests-heading12" style="color:#000000;">Contact types</h5>
-    
+    <div class="spacer" style="width: 300px; height: 15px;"></div>
+    <h4 id="yourInterests-heading12" style="color:#000000;"><i class="icon ion-ios-telephone"></i> Contact types</h4>    
 
     <ion-radio ng-repeat="item in Interests"
                ng-value="item.value"
                ng-model="Interests_Preference.data"
                name="InterestsTest"
-               ng-change="Interests_Change(item)">
+               ng-change="Interests_Change(item)"
+               icon="{{item.icon}}">
       {{ item.text }}
     </ion-radio>
 
-
-
-    <div class="spacer" style="width: 300px; height: 35px;"></div>
-    <h5 id="yourInterests-heading13" style="color:#000000;">For mentors only</h5>
-    <form id="yourInterests-form17" class="list">
-      <label class="item item-input" id="yourInterests-input23">
-        <span class="input-label">How many meetings per week:</span>
-        <input type="text" placeholder="" ng-model="temp.times_perweek">
-      </label>
-    </form>
+    <div class="spacer" style="width: 300px; height: 15px;"></div>
+    <div class="mentor-section" ng-show="{{isMentor}}">
+      <h4 id="yourInterests-heading13" style="color:#000000;"><i class="icon ion-ios-people"></i> Mentor Section</h4>
+      <form id="yourInterests-form17" class="list" style="margin-bottom: 20px;">
+        <label class="item item-input" id="yourInterests-input23">
+          <span class="input-label">How many meetings per week:</span>
+          <input type="text" placeholder="" ng-model="temp.times_perweek">
+        </label>
+      </form>
+    </div>
   </ion-content>
 </ion-view>
