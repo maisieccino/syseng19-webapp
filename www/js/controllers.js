@@ -271,13 +271,24 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
     {times_perweek:''}
     ]
 
-    Data.clear_selection();//intialize the selection at the start.
+    // Data.clear_selection();//intialize the selection at the start.
     $scope.roleType=String(Data.show_mentype());
     $scope.isMentor= ($scope.roleType)==='mentor' ? true : false;
     console.log($scope.isMentor);
     $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
     
     $scope.gohome=function(){
+        var temp=$scope.temp.times_perweek; //Add times per week
+        Data.set_times_perweek(temp);
+        $scope.Final_Data={
+          program_name:Data.show_program(),
+          role:Data.show_mentype(),
+          selection:Data.return_selection(),
+          contact_type:Data.Interests,
+          times:Data.get_times_perweek()
+        }
+     console.log($scope.Final_Data);
+     Data.clear_selection();
         $state.go('home');
      }
      
@@ -292,6 +303,14 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
         console.log(Data.return_selection());
 
     };
+
+    $scope.judgeSelection=function judgeSelection(interests){
+        if (Data.show_selection_index(interests)>-1) {
+            return true;
+        }
+        else return false;
+
+    }
     
 
     $scope.Interests_Change = function(item) {
@@ -300,9 +319,16 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
     };
 
     $scope.getback=function(){
-        var temp=$scope.temp.times_perweek; //Add times per week
-        Data.set_times_perweek(temp);
-
+     //    var temp=$scope.temp.times_perweek; //Add times per week
+     //    Data.set_times_perweek(temp);
+     //    $scope.Final_Data={
+     //    program_name:Data.show_program(),
+     //    role:Data.show_mentype(),
+     //    selection:Data.return_selection(),
+     //    contact_type:Data.Interests,
+     //    times:Data.get_times_perweek()
+     // }
+     // console.log($scope.Final_Data);
     	$state.go('registerProgram');
     }
 }])

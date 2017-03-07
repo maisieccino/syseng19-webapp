@@ -48,6 +48,11 @@ angular.module('app.services', ['ngStorage'])
             },
             clear_selection: function(){
                 selection=[];
+                current_program=null;    
+                Interests=null;
+                mentype="mentor"; 
+                times_per_week=null;
+
             },
             set_times_perweek: function(ab){
                 times_per_week=ab;
