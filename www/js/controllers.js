@@ -29,10 +29,16 @@ function ($scope, $stateParams,$state,Data,$localStorage) {
 }])
    
 .controller('profileCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+  function ($scope, $stateParams,$state) {
+    // User Data
+    $scope.currentRole = "Student Intern";
+    $scope.enrolledPrograms = [];
+    $scope.mentors = ["John Smith", "Collin Wong"];
+    $scope.mentees = ["Christopher Lau", "Collin Wong"];
+    $scope.skills = ["Java", "SQL", "Microsoft Word"];
+    $scope.noMentors = ($scope.mentors.length == 0) ? true : false;
+    $scope.noMentees = ($scope.mentees.length == 0) ? true : false;
+    $scope.noEnrolledPrograms = ($scope.enrolledPrograms.length == 0) ? true : false;
 
 }])
    
@@ -141,7 +147,7 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
     $scope.learnFaster=Data.get_isregistered_learnFatser();
     $scope.Accelerates=Data.get_isregistered_Accelerates();
     $scope.manage=Data.get_isregistered_manage();
-
+    $scope.nonRegistered = !($scope.learnFaster && $scope.Accelerates && $scope.nonRegistered);
 
     $scope.learnFasterctrl=function(){
         Data.set_current_program("LearnFaster");

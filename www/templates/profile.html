@@ -9,28 +9,37 @@
     <div class="profile-lower-section" style="padding-bottom: 10px;">
       <div class="item item-body" id="profile-list-item-container5">
         <div id="profile-markdown6" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Current role:</p>
+          <p style="margin-top:0px;color:#000000;"><strong>Current role: </strong> {{currentRole}}</p>
         </div>
       </div>
       <div class="item item-body" id="profile-list-item-container6">
         <div id="profile-markdown6" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Enrolled in: </p>
+          <span ng-show={{noEnrolledPrograms}} >
+            <p style="margin-top:0px;color:#000000;"><strong>Enrolled in: </strong> Currently not enrolled in a program.</p>
+          </span>
+          <span ng-hide={{noEnrolledPrograms}}><p style="margin-top:0px;color:#000000;"><strong>Enrolled in: </strong> <span ng-repeat="item in enrolledPrograms">{{item}}, </span></p></span>
         </div>
       </div>
       <div class="item item-body" id="profile-list-item-container7">
         <div id="profile-markdown6" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Mentors: </p>
+          <span ng-show={{noMentors}} >
+            <p style="margin-top:0px;color:#000000;"><strong>Mentors: </strong> Currently have no mentors.</p>
+          </span>
+          <p ng-hide={{noMentors}} style="margin-top:0px;color:#000000;"><strong>Mentors: </strong>  <span ng-repeat="item in mentors">{{item}}, </span></p>
         </div>
       </div>
       <div class="item item-body" id="profile-list-item-container8">
         <div id="profile-markdown6" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;">Mentees:</p>
+          <span ng-show={{noMentees}} >
+            <p style="margin-top:0px;color:#000000;"><strong>Mentees: </strong> Currently have no mentees.</p>
+          </span>
+          <p ng-hide={{noMentees}} style="margin-top:0px;color:#000000;"><strong>Mentees: </strong>  <span ng-repeat="item in mentees">{{item}}, </span></p>
         </div>
       </div>
       <div class="item item-body" id="profile-list-item-container8">
         <div id="profile-markdown6" class="show-list-numbers-and-dots">
           <p style="margin-top:0px;color:#000000;">
-            Skills: <span class="skillbox">Java</span> <span class="skillbox">SQL</span> <span class="skillbox">Microsoft Word</span>
+            <strong>Skills: </strong> <span ng-repeat="item in skills" class="skillbox">{{item}}</span>
           </p>
         </div>
       </div>  
