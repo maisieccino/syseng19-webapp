@@ -5,13 +5,19 @@
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
+      <div ng-show={{nonRegistered}}>
+        <div class="item item-text-wrap">
+          <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
+          <p style="text-align: center;">You are not enrolled in any mentorship programs.</p>
+        </div>
+      </div>
       <div ng-show={{learnFaster}}>
       <div class="item item-image" >
         <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
       </div>
       <div class="item item-text-wrap">
         <h2><strong>Learn Faster Mentoring</strong></h2>
-        <p>Short description for this program.</p>
+        <p>This is an open program that allows anyone to participate as either a mentor or mentee.</p>
         <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
       </div>
       </div> <!-- finish ng-show -->
@@ -54,10 +60,10 @@
       </div>
       <div class="item item-text-wrap">
         <h2><strong>Learn Faster Mentoring</strong></h2>
-        <p>Short description for this program.</p>
+        <p>This is an open program that allows anyone to participate as either a mentor or mentee.</p>
         <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
       </div>
-      </div> <!-- finish ng-show -->
+      </div> <!-- finish ng-hide -->
 
 
 
@@ -69,7 +75,7 @@
         </div>
         <div class="item item-text-wrap">
           <h2><strong>Accelerate Talent Scheme</strong></h2>
-          <p>Short description for this program.</p>
+          <p>This is a program aimed to help employees in career development. There are 50-60 positions for this scheme.</p>
           <a ng-click="Acceleratectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
         </div>
       </div>
@@ -79,7 +85,7 @@
         </div>
         <div class="item item-text-wrap">
           <h2><strong>Managed Services Talent Scheme</strong></h2>
-          <p>Short description for this program.</p>
+          <p>This is a program aimed to help employees in career development. There are 70 positions for this scheme.</p>
           <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
         </div>
       </div>
