@@ -5,7 +5,19 @@
   <ion-content padding="true" class="has-header">
 
     <h4><i class="icon ion-star"></i> Interests</h4>
-    <ion-checkbox ng-repeat="interests in test1" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1">{{interests}}</ion-checkbox>
+
+   <!--  Add search box -->
+    <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="search" placeholder="search interests" ng-model="search">
+    </label>
+
+
+
+    <!-- <ion-checkbox ng-repeat="interests in test1 | filter: search" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1 " >{{interests}}</ion-checkbox> -->
+    <ion-checkbox ng-repeat="interests in test1 | filter: search" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="judgeSelection(interests) " >{{interests}}</ion-checkbox>
+
+
 
     <div class="spacer" style="width: 300px; height: 15px;"></div>
     <h4 id="yourInterests-heading12" style="color:#000000;"><i class="icon ion-ios-telephone"></i> Contact types</h4>    
