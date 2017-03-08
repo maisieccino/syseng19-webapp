@@ -50,43 +50,62 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope','$filter',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
+function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filter) {
 	
-	$scope.user={   // Bind attribute with form data
-		name:"" ,   // Add attributes
+	  $scope.user={   // Bind attribute with form data
+		first_name:"" ,   // Add attributes
+    last_name:"",
+    department:"",
 		email:"",
 		password:"",
 		repeatpassword:"",
 		position:"",
+    join_date:"",
 		bio:""
     };
 
+
+
+
+
     $scope.register = function() {
 
-            var formData = {
-            	name: $scope.user.name,
+      // var temp=$scope.user.join_date;
+      // var temp1=temp.slice(0,9);
+      
+      $scope.date=$filter('date')($scope.user.join_date,"yyyy-MM-dd");
+
+      var formData = {
                 email: $scope.user.email,
                 password: $scope.user.password,
-                repeatedpassword: $scope.user.repeatedpassword,
-                position: $scope.user.position,
-                bio: $scope.user.bio
-            }   //set form data
+                first_name: $scope.user.first_name,
+                last_name: $scope.user.last_name,
+                profile:{
+                  join_date: $scope.date,
+                  position: $scope.user.position,  
+                  department: $scope.user.department,      
+                  bio: $scope.user.bio
+              }
+      }   //set form data
 
 
             Auth.save(formData, function(res) {   //use the function save() from Auth service
                 if (res.type == false) {  //function success callback
                     alert(res.data)
                 } else {
-                    $localStorage.token = res.data.token; //将服务器返回的token保存到本地
                     $state.go('login'); 
                 }
             }, function() {  //function 
                 // $rootScope.error = 'Failed to signup';
                 console.log("failed to sign up");
                })
+            // console.log(formData);
+
+
+
             };
 
     $scope.backToLogin=function(){
@@ -112,14 +131,15 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
     emailaddress:'',
     password:''
     };
-    var logindata="username="+"test@example.com"+"&password="+"hunter23"+"&grant_type=password";
-
     $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
 
     $scope.loginctl=function(){ 
-        console.log("I am logging in");
+         console.log("I am logging in");
          delete $localStorage.token;
-        var req = {
+
+         var logindata="username="+$scope.loginuser.emailaddress+"&password="+$scope.loginuser.password+"&grant_type=password";
+        
+           var req = {
             method: 'POST',
             url: "https://api.dev.mbell.me/auth/token/",
             headers: {

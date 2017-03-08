@@ -97,7 +97,7 @@ angular.module('app.services', ['ngStorage'])
 
         return {
             save: function(data, success, error) {     //used for register
-                $http.post('https://api.dev.mbell.me/', data).success(success).error(error)  //
+                $http.post('https://api.dev.mbell.me/user/', data).success(success).error(error)  //
             },
             logout: function(success) {
                 delete $localStorage.token;
