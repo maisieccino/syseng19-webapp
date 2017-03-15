@@ -27,7 +27,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
                     if ($localStorage.token) {
                         config.headers.Authorization = 'Bearer ' + $localStorage.token;
                     }
-                    return config;
+                    return config || $q.when(config);
                 },
                 'responseError': function(response) {
                     if(response.status === 401 || response.status === 403) {
@@ -43,6 +43,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
     
   }
 )//结束config
+
+
+
+
+
 
 
 // .config(['$httpProvider','$localStorage', function ($httpProvider,$localStorage) {
