@@ -137,7 +137,7 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
          console.log("I am logging in");
          delete $localStorage.token;
 
-         var logindata="username="+$scope.loginuser.emailaddress+"&password="+$scope.loginuser.password+"&grant_type=password";
+         var logindata="username="+$scope.loginuser.emailaddress+"&password="+$scope.loginuser.password+"&grant_type=password"+ "&scope=read write admin staff";
         
            var req = {
             method: 'POST',
@@ -151,6 +151,10 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
         $http(req).then(function(res){
             $localStorage.token=res.data.access_token; //store the returned token in localstorage
             console.log($localStorage.token);
+
+            // $http.defaults.headers.common['Token'] = $localStorage.token || {};
+
+
             $state.go('home');
         },function(res){
         console.log(res);
@@ -164,6 +168,13 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
+
+    $scope.gocreate=function(){
+      $state.go('create_Program');
+    }
+
+
+
     $scope.learnFaster=Data.get_isregistered_learnFatser();
     $scope.Accelerates=Data.get_isregistered_Accelerates();
     $scope.manage=Data.get_isregistered_manage();
@@ -192,6 +203,54 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data) {
 
 }])
    
+
+
+////**************This is the controller for creating a new program 
+.controller('create_ProgramCtrl',['$scope','$state','$filter',
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+  function($scope,$state,$filter){
+        $scope.program={   // Bind attribute with form data
+           name:'',
+           description:'',
+           cohort_size:'',
+           start_date:'',
+           end_date:'',
+
+        };
+
+
+
+        $scope.backToHome=function(){
+          $state.go('home');
+        }
+
+        $scope.create=function(){
+          var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
+          var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
+
+          $scope.form_data={
+          name:$scope.program.name,
+          description:$scope.program.description,
+          defaultCohortSize:$scope.program.cohort_size,
+          start_date:date1,
+          end_date:date2
+        }
+          console.log($scope.form_data);
+
+        }
+
+
+
+
+
+}])
+
+
+
+
+
+
    
 .controller('myMentorsCtrl', ['$scope', '$stateParams','$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 	// You can include any angular dependencies as parameters for this function
@@ -283,10 +342,10 @@ function ($scope, $stateParams,Data,$localStorage,$state,Data,$ionicHistory) {
 
 }])
    
-.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', 'Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('yourInterestsCtrl', ['$scope', '$stateParams','$state', 'Data','Mentorship_program','$localStorage','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,Data,$ionicHistory) {
+function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$http,$ionicHistory) {
     $scope.Interests=[
     {text:"Face to Face", value: "face to face",icon:"ion-ios-videocam"},
     {text:"E-mail", value: "email",icon:"icon ion-email"},
@@ -304,6 +363,7 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
     $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
     
     $scope.gohome=function(){
+        console.log($localStorage.token);
         var temp=$scope.temp.times_perweek; //Add times per week
         Data.set_times_perweek(temp);
         $scope.Final_Data={
@@ -313,9 +373,32 @@ function ($scope, $stateParams,$state,Data,$ionicHistory) {
           contact_type:Data.Interests,
           times:Data.get_times_perweek()
         }
-     console.log($scope.Final_Data);
-     Data.clear_selection();
-        $state.go('home');
+
+        console.log($scope.Final_Data);
+ 
+
+////////****************发送数据************************
+
+
+        Mentorship_program.register($scope.Final_Data,function(res){
+          if (res.type == false) {  //function success callback
+                    alert(res.data)
+                } else {
+                    Data.clear_selection();
+                    alert("register successfull!")
+                    $state.go('home');
+                }
+
+        },function(res){
+          console.log(res);
+          Data.clear_selection();
+
+        });
+
+
+
+        // Data.clear_selection();
+        // $state.go('home');
      }
      
     $scope.toggleSelection=function toggleSelection(interests){
