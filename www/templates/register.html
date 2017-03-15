@@ -15,8 +15,16 @@
         <div class="card list" >
           <ion-list id="register-list1">
             <label class="item item-input" id="register-input2">
-              <span class="input-label">Name</span>
-              <input type="text" placeholder="" ng-model=user.name required="true"> <!--  testing -->
+              <span class="input-label">First Name</span>
+              <input type="text" placeholder="" ng-model=user.first_name required="true"> <!--  testing -->
+            </label>
+            <label class="item item-input" id="register-input19">
+              <span class="input-label">Last Name</span>
+              <input type="text" placeholder="" ng-model=user.last_name required="true"> <!--  testing -->
+            </label>
+            <label class="item item-input" id="register-input20">
+              <span class="input-label">Department</span>
+              <input type="text" placeholder="" ng-model=user.department required="true"> <!--  testing -->
             </label>
             <label class="item item-input" id="register-input9">
               <span class="input-label">Email Address</span>
@@ -38,8 +46,10 @@
               <span class="input-label">Join Date</span>
               <input type="date" placeholder="" ng-model=user.join_date required="true">
             </label>
+            
+
             <label class="item item-input" id="register-textarea2">
-              <span class="input-label">Bio</span><textarea placeholder="A short bio about yourself." ng-model=bio ></textarea></label>
+              <span class="input-label">Bio</span><textarea placeholder="A short bio about yourself." ng-model=user.bio ></textarea></label>
         </div>  
         <a id="register-button1" class="button button-positive button-block" ng-click="submit()" ng-disabled="registerform.$invalid" >Register</a>
         </ion-list>

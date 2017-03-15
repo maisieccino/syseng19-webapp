@@ -87,6 +87,30 @@ angular.module('app.services', ['ngStorage'])
 
 })
 
+///////This is the program data model control , including the adimin add new programs, the users update the home page from server
+
+// .factory(Program_Control,['$http',function($http){
+//     var program1={
+
+
+//     };
+
+//     var All_programs=[];
+
+//     return{
+//         Show_All_program: function(){
+//             return All_programs;
+//         }
+//         Add_program : function(data,success,error){
+            
+//         }
+//         Update_program: function(){
+
+//         }
+
+//     };
+// }])
+
 
 
 
@@ -94,10 +118,9 @@ angular.module('app.services', ['ngStorage'])
 .factory('Auth', ['$http', '$localStorage', function($http, $localStorage){      //factory for Auth
         
 
-
         return {
             save: function(data, success, error) {     //used for register
-                $http.post('https://api.dev.mbell.me/', data).success(success).error(error)  //
+                $http.post('https://api.dev.mbell.me/user/', data).success(success).error(error)  //
             },
             logout: function(success) {
                 delete $localStorage.token;
@@ -108,6 +131,16 @@ angular.module('app.services', ['ngStorage'])
     }
 ])
 
+
+.factory('Mentorship_program',['$http',function($http){
+        return{
+            register: function(data,success,error){
+                $http.post('https://api.dev.mbell.me/programme/',data).success(success).error(error)
+            }
+
+        };
+    }
+])
 //app.config() could only use the provider serveice,
 // .provider('myinterceptor',function(){
 
