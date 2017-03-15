@@ -28,9 +28,19 @@ function ($scope, $stateParams,$state,Data,$localStorage) {
 
 }])
    
-.controller('profileCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-  function ($scope, $stateParams,$state) {
+.controller('profileCtrl', ['$scope', '$stateParams', '$state', '$localStorage', '$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+  function ($scope, $stateParams,$state,$localStorage,$http) {
     // User Data
+    console.log($localStorage.token);
+    var req = {
+        method: 'GET',
+        url: "https://api.dev.mbell.me/user/me/"
+    };
+    $http(req).then(function(res){
+        console.log(res.data.first_name);
+    },function(res){
+        console.log(res);
+    });
     $scope.currentRole = "Student Intern";
     $scope.enrolledPrograms = [];
     $scope.mentors = ["John Smith", "Collin Wong"];
@@ -50,10 +60,10 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope','$filter',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
+function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filter) {
 	
 	$scope.user={   // Bind attribute with form data
 		name:"" ,   // Add attributes
@@ -95,8 +105,10 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope) {
     }        
     // <---testing code--->
     // $scope.submit=function(){
-    // 	$localStorage.test=$scope.user.name;
-    // 	console.log($localStorage.test); //test for the using of $localStorage, does work!
+    // 	//$localStorage.test=$scope.user.name;
+    //   $scope.userDate = new Date();
+    // 	$scope.formattedDate = $filter('date')($scope.user.join_date, "dd-MM-yyyy"); //test for the using of $localStorage, does work!
+    //   console.log($scope.formattedDate);
     // 	// $localStorage.$reset();//delete everything in localstorage
     // };
 
@@ -112,7 +124,7 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
     emailaddress:'',
     password:''
     };
-    var logindata="username="+"test@example.com"+"&password="+"hunter23"+"&grant_type=password";
+    var logindata="username="+"chrisiscool@ucl.com"+"&password="+"123"+"&grant_type=password" + "&scope=read write staff admin";
 
     $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
 
@@ -130,6 +142,7 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
         };
         $http(req).then(function(res){
             $localStorage.token=res.data.access_token; //store the returned token in localstorage
+            console.log(req);
             console.log($localStorage.token);
             $state.go('home');
         },function(res){
