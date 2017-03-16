@@ -1,10 +1,22 @@
 angular.module('app.controllers', ['ngStorage'])  //inject for the using of $localstorage
 
 
-.controller('menuCtrl', ['$scope', '$stateParams', '$state','Data','$localStorage',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('menuCtrl', ['$scope', '$stateParams', '$state','Data','$localStorage','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,Data,$localStorage) {
+function ($scope, $stateParams,$state,Data,$localStorage,$http) {
+    $scope.userEmail = "";
+    $scope.firstName = "";
+    $scope.lastName = "";
+    var req = {
+        method: 'GET',
+        url: "https://api.dev.mbell.me/user/me/"
+    };
+    $http(req).then(function(res){
+        $scope.userEmail = res.data.email;
+        $scope.firstName = res.data.first_name;
+        $scope.lastName = res.data.last_name;
+    });
     $scope.gohome=function(){
         $state.go('home');
     }
@@ -24,7 +36,9 @@ function ($scope, $stateParams,$state,Data,$localStorage) {
         delete $localStorage.token;
         $state.go('login');
     }
-
+    $scope.goSettings=function(){
+        $state.go('settings');
+    }
 
 }])
    
@@ -32,23 +46,79 @@ function ($scope, $stateParams,$state,Data,$localStorage) {
   function ($scope, $stateParams,$state,$localStorage,$http) {
     // User Data
     console.log($localStorage.token);
+    $scope.firstName = "";
+    $scope.lastName = "";
+    $scope.userBio = "";
+    $scope.currentRole = "";
+    $scope.email = "";
+    $scope.enrolledPrograms = [];
+    $scope.mentors = ["John Smith", "Collin Wong"];
+    $scope.mentees = ["Christopher Lau", "Collin Wong"];
+    $scope.noMentors = ($scope.mentors.length == 0) ? true : false;
+    $scope.noMentees = ($scope.mentees.length == 0) ? true : false;
+    $scope.noEnrolledPrograms = ($scope.enrolledPrograms.length == 0) ? true : false;
     var req = {
         method: 'GET',
         url: "https://api.dev.mbell.me/user/me/"
     };
     $http(req).then(function(res){
-        console.log(res.data.first_name);
+        $scope.firstName = res.data.first_name;
+        $scope.lastName = res.data.last_name;
+        $scope.userBio = res.data.profile.bio;
+        $scope.currentRole = res.data.profile.position;
+        $scope.email = res.data.email;
+        console.log(res.data.profile.position);
     },function(res){
         console.log(res);
     });
-    $scope.currentRole = "Student Intern";
-    $scope.enrolledPrograms = [];
-    $scope.mentors = ["John Smith", "Collin Wong"];
-    $scope.mentees = ["Christopher Lau", "Collin Wong"];
-    $scope.skills = ["Java", "SQL", "Microsoft Word"];
-    $scope.noMentors = ($scope.mentors.length == 0) ? true : false;
-    $scope.noMentees = ($scope.mentees.length == 0) ? true : false;
-    $scope.noEnrolledPrograms = ($scope.enrolledPrograms.length == 0) ? true : false;
+
+}])
+
+.controller('settingsCtrl', ['$scope', '$stateParams', '$state', '$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams,$state,$http) {
+
+    $scope.user = {
+      first_name:"",
+      last_name:"",
+      department:"",
+      bio:"",
+      position:""
+    };
+
+    $scope.backToHome=function(){
+      $state.go('home');
+    }
+
+    $scope.saveProfile=function(){
+
+      var formData = {  
+        first_name:$scope.user.first_name,
+        last_name:$scope.user.last_name,
+        profile:{
+          position:$scope.user.position,
+          department:$scope.user.department,
+          bio:$scope.user.bio
+          } 
+      }
+
+      console.log(formData);
+
+      var req = {
+        method: 'PATCH',
+        url: "https://api.dev.mbell.me/user/me/",
+        data: formData
+      };
+
+      $http(req).then(function(res){
+        $state.go('profile');
+      },function(res){
+        console.log("Failed");
+        console.log(res);
+      });
+
+    }
 
 }])
    
@@ -94,13 +164,13 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filte
                 first_name: $scope.user.first_name,
                 last_name: $scope.user.last_name,
                 profile:{
-                  join_date: $scope.date,
+                  joinDate: $scope.date,
                   position: $scope.user.position,  
                   department: $scope.user.department,      
                   bio: $scope.user.bio
-              }
+                }
       }   //set form data
-
+      console.log(formData);
 
             Auth.save(formData, function(res) {   //use the function save() from Auth service
                 if (res.type == false) {  //function success callback

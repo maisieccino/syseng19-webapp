@@ -14,6 +14,13 @@ angular.module('app.routes', [])
     cache: false
   })
 
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',  //指定template链接
+    controller: 'settingsCtrl',
+    cache: false
+  })
+
   .state('contactPage', {
     url: '/page4',
     templateUrl: 'templates/contactPage.html',

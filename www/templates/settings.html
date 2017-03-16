@@ -1,0 +1,54 @@
+<ion-view title="User Settings" id="settings">
+
+   <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='backToHome()'></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right" class="has-header">
+    <button class="button button-icon icon No Icon"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header" style="background-color: #7ec9f8;">
+  <div class="card" id="register-card">
+    <div class="item">
+      <div class="spacer" style="height: 16px;"></div>
+      <p class="title-name" style="text-align: center; font-size: 19px;">Edit Your Profile</p>
+      <div class="spacer" style="height: 16px;"></div>
+
+
+      <form id="register-form1" name="registerform" >  <!-- 表单 -->
+        <!-- card -->
+        <div class="card list" >
+          <ion-list id="register-list1">
+            <label class="item item-input" id="create-input1">
+              <span class="input-label">First Name</span>
+              <input type="text" placeholder="" ng-model=user.first_name required="true"> <!--  testing -->
+            </label>
+            <label class="item item-input" id="create-input2">
+              <span class="input-label">Last Name</span>
+              <input  type="text" placeholder="" ng-model=user.last_name required="true">
+            </label>
+            <label class="item item-input" id="create-input3">
+              <span class="input-label">Department</span>
+              <input  type="text" placeholder="" ng-model=user.department required="true">
+            </label>
+            <label class="item item-input" id="create-input4">
+              <span class="input-label">Bio</span>
+              <input type="text" placeholder="" ng-model=user.bio required="true">
+            </label>
+            <label class="item item-input" id="create-input5">
+              <span class="input-label">Position</span>
+              <input type="text" placeholder="" ng-model=user.position required="true">
+            </label> 
+
+        </div>  <!-- 结束card -->
+
+        <a id="create-button1" class="button button-positive button-block" ng-click="saveProfile()" ng-disabled="registerform.$invalid" >Save</a>
+        </ion-list>
+      </form>
+
+
+    </div>
+  </div>
+
+
+  </ion-content>
+</ion-view>
