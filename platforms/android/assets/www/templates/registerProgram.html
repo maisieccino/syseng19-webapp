@@ -1,0 +1,19 @@
+<ion-view title="Register program" id="page10">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <h4 id="registerProgram-heading10" style="color:#000000;">Register as mentor or mentee?</h4>
+    <!-- <form id="registerProgram-form12" class="list">
+      <ion-radio id="registerProgram-radio6"   ng-value="mentee">Mentee</ion-radio>
+      <ion-radio id="registerProgram-radio7"   ng-value="mentor">Mentor</ion-radio>
+    </form> -->
+    <ion-list radio-group  id="registerProgram-form12" class="list" ng-model="mymentype" >
+      <ion-radio id="registerProgram-radio6"  ng-model="mymentype" value="mentee" ng-click="seta()" checked="false">Mentee</ion-radio>
+      <ion-radio id="registerProgram-radio7"  ng-model="mymentype" value="mentor" ng-click="setb()" checked="false">Mentor</ion-radio>
+    </ion-list> 
+    <div class="spacer" style="width: 300px; height: 107px;"></div>
+    <a ng-click="gointerests()" id="registerProgram-button60" class="button button-positive button-block"><i class="icon ion-edit"></i> Click to Your Edit Details</a>
+    <!-- <a ng-click="gohome()" id="registerProgram-button61" class="button button-positive button-block">Submit</a> -->
+  </ion-content>
+</ion-view>

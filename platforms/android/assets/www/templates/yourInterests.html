@@ -1,0 +1,48 @@
+<ion-view title="Your Interests" id="page11">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+
+    <h4><i class="icon ion-star"></i> Interests</h4>
+
+   <!--  Add search box -->
+    <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="search" placeholder="search interests" ng-model="search">
+    </label>
+
+
+
+    <!-- <ion-checkbox ng-repeat="interests in test1 | filter: search" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="selection.indexOf(interests)>-1 " >{{interests}}</ion-checkbox> -->
+    <ion-checkbox ng-repeat="interests in test1 | filter: search" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="judgeSelection(interests) " >{{interests}}</ion-checkbox>
+
+
+
+    <div class="spacer" style="width: 300px; height: 15px;"></div>
+    <h4 id="yourInterests-heading12" style="color:#000000;"><i class="icon ion-ios-telephone"></i> Contact types</h4>    
+
+    <ion-radio ng-repeat="item in Interests"
+               ng-value="item.value"
+               ng-model="Interests_Preference.data"
+               name="InterestsTest"
+               ng-change="Interests_Change(item)"
+               icon="{{item.icon}}">
+      {{ item.text }}
+    </ion-radio>
+
+
+    <div class="spacer" style="width: 300px; height: 15px;"></div>
+    <div class="mentor-section" ng-show="{{isMentor}}">
+      <h4 id="yourInterests-heading13" style="color:#000000;"><i class="icon ion-ios-people"></i> Mentor Section</h4>
+      <form id="yourInterests-form17" class="list" style="margin-bottom: 20px;">
+        <label class="item item-input" id="yourInterests-input23">
+          <span class="input-label">How many meetings per week:</span>
+          <input type="text" placeholder="" ng-model="temp.times_perweek">
+        </label>
+      </form>
+    </div>
+    <a ng-click="gohome()" id="registerProgram-button61" class="button button-positive button-block">Submit</a>
+  </ion-content>
+
+</ion-view>
