@@ -155,10 +155,10 @@ function ($scope, $stateParams) {
 
 }])
       
-.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope','$filter',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('registerCtrl', ['$scope', '$stateParams', '$http','$state','Auth','$localStorage','$rootScope','$filter','registerService',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filter) {
+function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filter,registerService) {
 	
 	  $scope.user={   // Bind attribute with form data
 		first_name:"" ,   // Add attributes
@@ -171,10 +171,6 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filte
     join_date:"",
 		bio:""
     };
-
-
-
-
 
     $scope.register = function() {
 
@@ -201,6 +197,7 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filte
                 if (res.type == false) {  //function success callback
                     alert(res.data)
                 } else {
+                    registerService.addCredentials($scope.user.email,$scope.user.password);
                     $state.go('login'); 
                 }
             }, function() {  //function 
@@ -209,9 +206,7 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filte
                })
             // console.log(formData);
 
-
-
-            };
+    };
 
     $scope.backToLogin=function(){
             console.log("Going to Login");
@@ -230,16 +225,15 @@ function ($scope, $stateParams,$http,$state,Auth,$localStorage,$rootScope,$filte
 
 }])
    
-.controller('loginCtrl', ['$scope', '$stateParams', '$state','$localStorage','Auth','$rootScope','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$stateParams', '$state','$localStorage','Auth','$rootScope','$http','registerService',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
+function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http,registerService) {
     $scope.loginuser={
-    emailaddress:'',
-    password:''
+      emailaddress:registerService.getEmail(),
+      password:registerService.getPassword() 
     };
     $scope.encoded = btoa(window.__env.client_id+':'+window.__env.client_password);
-
     $scope.loginctl=function(){ 
          console.log("I am logging in");
          delete $localStorage.token;
@@ -265,6 +259,7 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http) {
 
             $state.go('home');
         },function(res){
+        $scope.errorMsg = "Login Failed. Please enter correct credentials!"
         console.log(res);
         }); }
 

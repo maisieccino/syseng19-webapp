@@ -14,11 +14,11 @@
 /*Profile Page*/
 .thumbnail{
 	border-radius: 200px;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background-size: 200px;
     background-position: right;
-    border: 5px solid white;
+    border: 3px solid white;
 }
 
 .profile-upper-section{
@@ -30,11 +30,19 @@
 	background: linear-gradient(to left, #a09ac0  , #1ce);         
 }
 
-.skillbox{
+.box-negative{
 	border:1px solid red;
 	border-radius: 3px;
 	color: red;
 	padding: 8px;
+    margin-right: 5px;
+}
+
+.box-positive{
+    border:1px solid #12991d;
+    border-radius: 3px;
+    color: #12991d;
+    padding: 6px;
     margin-right: 5px;
 }
 
