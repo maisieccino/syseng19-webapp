@@ -38,12 +38,25 @@
               <span class="input-label">End Date</span>
               <input type="date" placeholder="" ng-model=program.end_date required="true">
             </label> 
+            <label class="item item-input" id="create-input6">
+              <span class="input-label">Match Date</span>
+              <input type="date" placeholder="" ng-model=program.match_date required="false">
+            </label> 
 
         </div>  <!-- 结束card -->
 
         <a id="create-button1" class="button button-positive button-block" ng-click="create()" ng-disabled="registerform.$invalid" >Create</a>
         </ion-list>
       </form>
+
+
+      <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+      <img ng-show="imgURI === undefined" ng-src="http://placehold.it/100x100">
+      <label class="item item-input" id="create-input6">
+              <button type="date" placeholder="" ng-click="takePicture()"> take photo</button>
+      </label> 
+
+
 
 
     </div>
