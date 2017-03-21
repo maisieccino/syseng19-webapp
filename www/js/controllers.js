@@ -324,16 +324,17 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data,$http) {
 
 
 ////**************This is the controller for creating a new program 
-.controller('create_ProgramCtrl',['$scope','$state','$filter',
+.controller('create_ProgramCtrl',['$scope','$state','$filter','$http','$cordovaCamera',
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-  function($scope,$state,$filter){
+  function($scope,$state,$filter,$http,$cordovaCamera){
         $scope.program={   // Bind attribute with form data
            name:'',
            description:'',
            cohort_size:'',
            start_date:'',
            end_date:'',
+           match_date:''
 
         };
 
@@ -346,17 +347,53 @@ function ($scope, $stateParams,$rootScope,$state,$localStorage,Data,$http) {
         $scope.create=function(){
           var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
           var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
+          var date3=$filter('date')($scope.program.match_date,"yyyy-MM-dd");
 
           $scope.form_data={
           name:$scope.program.name,
           description:$scope.program.description,
           defaultCohortSize:$scope.program.cohort_size,
-          start_date:date1,
-          end_date:date2
-        }
+         
+          }
           console.log($scope.form_data);
 
+          var req = {
+          method: 'POST',
+          url: "https://api.dev.mbell.me/programme/",
+          headers: {
+          'Content-type': 'application/json'
+          },
+          data: $scope.formData
+          };
+
+         $http(req).then(function(res){
+         console.log("add programme successfully");
+         $state.go('home');
+         },function(res){
+         console.log(res.headers());
+      }); 
+
         }
+
+      $scope.takePicture = function() {
+        var options = { 
+            quality : 75, 
+            destinationType : Camera.DestinationType.DATA_URL, 
+            sourceType : Camera.PictureSourceType.CAMERA, 
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 100,
+            targetHeight: 100,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+ 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            console.log(err);// An error occured. Show a message to the user
+        });
+    }
 
 
 
