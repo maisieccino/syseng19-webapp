@@ -30,8 +30,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
                     return config || $q.when(config);
                 },
                 'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
+                    if(response.status === 401 ) {
                         $injector.get('$state').transitionTo('login');  //因为报错或者token过期,返回login page
+                    }
+                    else if (response.status===403) {
+                      $injector.get('$state').transitionTo('home');
                     }
                     return $q.reject(response);
                 }
