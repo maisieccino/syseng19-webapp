@@ -4,6 +4,30 @@ angular.module('app.services', ['ngStorage'])
 
 }])
 
+// Service to transfer register details to login page upon successful registration
+.service('registerService', function() {
+  var credentials = [];
+
+  var addCredentials = function(userEmail,password) {
+      credentials.push(userEmail);
+      credentials.push(password);
+  };
+
+  var getEmail = function(){
+      return credentials[0];
+  };
+
+  var getPassword = function(){
+      return credentials[1];
+  };
+
+  return {
+    addCredentials: addCredentials,
+    getEmail: getEmail,
+    getPassword: getPassword
+  };
+
+})
 
 .factory('Data', function(){
        var current_program=null;    
