@@ -1,4 +1,4 @@
-<ion-view title={{program.name}} id="page9">
+<ion-view title={{program}} id="page9">
   <ion-nav-buttons side="left" class="has-header">
     <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
   </ion-nav-buttons>
@@ -13,13 +13,13 @@
       <h4 id="learnFasterMentoring-heading15" style="color:#000000;">Description</h4>
       <div id="learnFasterMentoring-markdown10" class="show-list-numbers-and-dots">
         <!-- <p style="color:#000000;">{{description}}</p> -->
-        <p style="color:#000000;" dd-text-collapse dd-text-collapse-max-length="350" dd-text-collapse-text="{{ program.description }}"></p>
+        <p style="color:#000000;" dd-text-collapse dd-text-collapse-max-length="350" dd-text-collapse-text="{{ longText }}"></p>
       </div>
-      <!-- <div class="list">
+      <div class="list">
         <p class="item item-icon-left">
           <i class="icon ion-ios-people"></i><span style="font-weight: bold;">Remaining Spots</span><span class="badge badge-assertive">5</span> 
         </p>
-      </div> -->
+      </div>
       <!-- <h4 id="learnFasterMentoring-heading9" style="color:#000000;">Remaining Spaces</h4>
       <form id="learnFasterMentoring-form8" class="list">
         <label class="item item-input" id="learnFasterMentoring-input16">
