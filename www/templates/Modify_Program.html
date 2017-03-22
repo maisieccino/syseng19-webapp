@@ -1,4 +1,4 @@
-<ion-view title="Create new program" id="page100">
+<ion-view title="Modify Program" >
 
    <ion-nav-buttons side="left" class="has-header">
     <button class="button button-icon icon ion-arrow-left-c" ng-click='backToHome()'></button>
@@ -19,29 +19,22 @@
         <div class="card list" >
           <ion-list id="register-list1">
             <label class="item item-input" id="create-input1">
-              <span class="input-label">Program Name</span>
-              <input type="text" placeholder="" ng-model=program.name required="true"> <!--  testing -->
+              <span class="input-label">New Program Name</span>
+              <input type="text" placeholder="" ng-model=newprogram.name > <!--  testing -->
             </label>
             <label class="item item-input" id="create-input2">
-              <span class="input-label">Description</span>
-              <input  type="text" placeholder="Description for the program" ng-model=program.description required="true">
+              <span class="input-label">New Description</span>
+              <input  type="text" placeholder="Description for the program" ng-model=newprogram.description >
             </label>
             <label class="item item-input" id="create-input3">
-              <span class="input-label">Cohort size</span>
-              <input  type="text" placeholder="should be in number" ng-model=program.cohort_size required="true">
+              <span class="input-label">New Cohort size</span>
+              <input  type="text" placeholder="should be in number" ng-model=newprogram.cohort_size >
             </label>
-            <!-- <label class="item item-input" id="create-input4">
-              <span class="input-label">Start Date</span>
-              <input type="date" placeholder="" ng-model=program.start_date required="true">
-            </label>
-            <label class="item item-input" id="create-input5">
-              <span class="input-label">End Date</span>
-              <input type="date" placeholder="" ng-model=program.end_date required="true">
-            </label>  -->
 
         </div>  <!-- 结束card -->
 
-        <a id="create-button1" class="button button-positive button-block" ng-click="create()" ng-disabled="registerform.$invalid" >Create</a>
+        <a id="create-button1" class="button button-positive button-block" ng-click="Modify()" ng-disabled="registerform.$invalid" >Modify</a>
+        <a id="create-button1" class="button button-assertive button-block" ng-click="Delete()"  >Delete</a>
         </ion-list>
       </form>
 

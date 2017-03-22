@@ -5,9 +5,7 @@
       <div class="item item-divider" style="background-color: #cfdef8;">
         Create a new program
       </div>
-
       <a ng-click="gocreate()" class="button button-block button-positive button-outline"> Create here!</a>
-
    </div>
 
     <!-- Currently enrolled programs -->
@@ -15,7 +13,55 @@
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
-      <div ng-show={{nonRegistered}}>
+      
+      </div>
+
+
+
+    </div>
+    <!-- Other programs -->
+    <div class="card" id="home-card22" style="padding-bottom: 20px;">
+      <div class="item item-divider" style="background-color: #d1eccb;">
+        You are eligable to enroll in
+      </div>  
+
+     <!--  <div ng-hide={{learnFaster}}>
+      <div class="item item-image" >
+        <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
+      </div>
+      <div class="item item-text-wrap">
+        <h2><strong>Learn Faster Mentoring</strong></h2>
+        <p>This is an open program that allows anyone to participate as either a mentor or mentee.</p>
+        <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
+      </div> -->
+      <!-- </div> --> <!-- finish ng-hide -->
+
+
+      <div ng-repeat="program in All_Programs" >
+
+      <div class="item item-text-wrap">
+        <h2><strong>{{program.name}}</strong></h2>
+        <p>{{program.description}}</p>
+        <a class="button button-block button-positive button-outline" ng-click="go_program_detail(program)" > Find out more!</a>
+        <a class="button button-block button-royal button-outline" ng-click="go_cohort_editing(program)" > Manage cohorts (admin only)</a>
+        <a class="button button-block button-assertive button-outline" ng-click="go_program_modify(program)">Modify this program (admin only)</a>
+
+      </div>
+      </div>
+
+
+    </div>
+  </ion-content>
+
+  <ion-tabs class="tabs-icon-top tabs-positive">
+    <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
+    <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
+    <ion-tab title="Notifications" icon="ion-android-notifications" badge="3" badge style="badge-assertive" href=""></ion-tab>
+  </ion-tabs>
+</ion-view>
+
+
+<!-- <div ng-show={{nonRegistered}}>
         <div class="item item-text-wrap">
           <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
           <p style="text-align: center;">You are not enrolled in any mentorship programs.</p>
@@ -30,10 +76,10 @@
         <p>This is an open program that allows anyone to participate as either a mentor or mentee.</p>
         <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
       </div>
-      </div> <!-- finish ng-show -->
+      </div> 
 
       <div  ng-show={{Accelerates}}>
-        <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
+        <div class="item item-divider">Learn Faster Mentoring</div> 
         <div class="item item-image">
           <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
         </div>
@@ -52,34 +98,13 @@
           <h2><strong>Managed Services Talent Scheme</strong></h2>
           <p>Short description for this program.</p>
           <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
-        </div>
-      </div>
-
-
-
-    </div>
-    <!-- Other programs -->
-    <div class="card" id="home-card22" style="padding-bottom: 20px;">
-      <div class="item item-divider" style="background-color: #d1eccb;">
-        You are eligable to enroll in
-      </div>  
-
-      <div ng-hide={{learnFaster}}>
-      <div class="item item-image" >
-        <img ng-src="http://wallpapercave.com/wp/ew0V5jf.jpg" alt="Item img">
-      </div>
-      <div class="item item-text-wrap">
-        <h2><strong>Learn Faster Mentoring</strong></h2>
-        <p>This is an open program that allows anyone to participate as either a mentor or mentee.</p>
-        <a ng-click="learnFasterctrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
-      </div>
-      </div> <!-- finish ng-hide -->
+        </div> -->
 
 
 
 
-      <div id="accelerate-talent" ng-hide={{Accelerates}}>
-        <!-- <div class="item item-divider">Learn Faster Mentoring</div> -->
+
+<!-- <div id="accelerate-talent" ng-hide={{Accelerates}}>
         <div class="item item-image">
           <img ng-src="http://www.binauralbeatshub.com/wp-content/uploads/2014/07/MK2-BG.jpg" alt="Item img">
         </div>
@@ -98,13 +123,4 @@
           <p>This is a program aimed to help employees in career development. There are 70 positions for this scheme.</p>
           <a ng-click="Managectrl()" class="button button-block button-positive button-outline"><i class="icon ion-ios-information-outline"></i> Find out more!</a>
         </div>
-      </div>
-    </div>
-  </ion-content>
-
-  <ion-tabs class="tabs-icon-top tabs-positive">
-    <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
-    <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
-    <ion-tab title="Notifications" icon="ion-android-notifications" badge="3" badge style="badge-assertive" href=""></ion-tab>
-  </ion-tabs>
-</ion-view>
+      </div>  -->
