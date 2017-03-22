@@ -91,27 +91,6 @@ angular.module('app.routes', [])
     cache: false
   })
 
-  .state('Modify_Program',{
-    url: '/Modify_Program',
-    templateUrl: 'templates/Modify_Program.html',
-    controller:'Modify_ProgramCtrl',
-    cache:false
-  })
-
-  .state('Modify_Cohort',{
-    url: '/Modify_Cohort',
-    templateUrl: 'templates/Modify_Cohort.html',
-    controller:'Modify_CohortCtrl',
-    cache:false
-  })
-
-  .state('Cohort_Manage',{
-    url: '/Cohort_Manage',
-    templateUrl: 'templates/CohortManage.html',
-    controller:'Cohort_ManageCtrl',
-    cache:false
-  })
-
   .state('yourInterests', {
     url: '/page11',
     templateUrl: 'templates/yourInterests.html',
