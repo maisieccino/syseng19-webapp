@@ -39,8 +39,12 @@
               <input type="text" placeholder="" value="abc" ng-model=user.position required="true">
             </label> 
 
+    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/40x40">
+
         </div>  <!-- 结束card -->
 
+        <a id="create-button1" class="button button-positive button-block" ng-click="takePicture()"> Upload a image</a>
         <a id="create-button1" class="button button-positive button-block" ng-click="saveProfile()" ng-disabled="registerform.$invalid" >Save</a>
         </ion-list>
       </form>
