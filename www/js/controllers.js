@@ -113,8 +113,8 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
             sourceType : Camera.PictureSourceType.CAMERA, 
             allowEdit : true,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 20,
-            targetHeight: 20,
+            targetWidth: 100
+            targetHeight: 100,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false
         };
