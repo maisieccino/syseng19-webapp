@@ -41,18 +41,8 @@ angular.module('app.services', ['ngStorage'])
         manage:"false"
        };
 
-       var current_cohortID=null;
-
-
-
 
         return{
-            set_current_cohortID:function(id1){
-                current_cohortID=id1;
-            },
-            get_current_cohortID: function(){
-                return current_cohortID;
-            },
             show_program:function(){
                 // return this.current_program;
                 return current_program;
@@ -153,66 +143,27 @@ angular.module('app.services', ['ngStorage'])
 
 ///////This is the program data model control , including the adimin add new programs, the users update the home page from server
 
-.factory('Program_Control',['$http',function($http){
-    var AllProgram=[];
-
-    var getData = function() {
-
-        // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://api.dev.mbell.me/programme/"}).then(function(result){
-
-            // What we return here is the data that will be accessible 
-            // to us after the promise resolves
-            return result.data;
-        });
-    };
-    
-    return { getData: getData };
+// .factory(Program_Control,['$http',function($http){
+//     var program1={
 
 
-    return { 
+//     };
 
+//     var All_programs=[];
 
-        GetAllProgram: function(){
-            var req = {
-            method: 'GET',
-            url: "https://api.dev.mbell.me/programme/",
-            headers: {
-            'Content-type': 'application/json'
-             },
-            };
-           $http(req).then(function(res,callback){
-            AllProgram=res.data;
-            return AllProgram;
-           },function(res){
-           console.log(res.headers());
-          }); 
-        }
-    };
+//     return{
+//         Show_All_program: function(){
+//             return All_programs;
+//         }
+//         Add_program : function(data,success,error){
+            
+//         }
+//         Update_program: function(){
 
-}])
+//         }
 
-.factory('Cohort_Control',['$http',function($http){
-    var AllCohort=[];
-
-    var getData = function(programID) {
-
-        // Angular $http() and then() both return promises themselves 
-        return $http({method:"GET", url:"https://api.dev.mbell.me/programme/"+programID+"/cohorts/"}).then(function(result){
-
-            // What we return here is the data that will be accessible 
-            // to us after the promise resolves
-            return result.data;
-        });
-    };
-    
-    return { getData: getData };
-
-
-}])
-
-
-
+//     };
+// }])
 
 
 

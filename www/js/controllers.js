@@ -267,50 +267,14 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http,regis
   
 
 //Controller for home page 
-.controller('homeCtrl', [ '$stateParams','$rootScope','$state','$localStorage','Data','$http','Program_Control','$scope','Data',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('homeCtrl', ['$scope', '$stateParams','$rootScope','$state','$localStorage','Data','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Control,$scope,Data) {
-
-
-    $scope.All_Programs=[];
-
-    var myDataPromise = Program_Control.getData();
-
-    myDataPromise.then(function(result) {  
-       $scope.All_Programs= result;
-       console.log($scope.All_Programs);
-
-    });
-
-    $scope.go_program_detail=function(program){
-      // console.log(program);
-      Data.set_current_program(program);
-      Data.show_program();
-
-
-      $state.go('learnFasterMentoring');
-    }
-
-    $scope.go_cohort_editing=function(program){
-       Data.set_current_program(program);
-      Data.show_program();
-      $state.go('Cohort_Manage');
-    }
-
-    $scope.go_program_modify=function(program){
-      Data.set_current_program(program);
-      Data.show_program();
-      $state.go('Modify_Program');
-    }
-
-
+function ($scope, $stateParams,$rootScope,$state,$localStorage,Data,$http) {
 
     $scope.gocreate=function(){
       $state.go('create_Program');
     }
-
-
 
     var req = {
         method: 'GET',
@@ -356,214 +320,20 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     }
 
 }])
- 
-
-.controller('Cohort_ManageCtrl',['$scope','$state','Data','$http','Cohort_Control',
-  function($scope,$state,Data,$http,Cohort_Control){
-
-        $scope.currentProgram=Data.show_program();
-        $scope.All_Cohorts=[];
-
-        var myDataPromise = Cohort_Control.getData($scope.currentProgram.programmeId);
-
-        myDataPromise.then(function(result) {  
-        $scope.All_Cohorts= result;
-        console.log($scope.All_Cohorts);
-        });
-
-        $scope.DeleteCohort=function(cohort_id){
-          var req = {
-          method: 'DELETE',
-          url: "https://api.dev.mbell.me/cohort/"+cohort_id+"/",
-          };
-        
-        $http(req).then(function(res){
-        // console.log('Modify successfull');
-        console.log(res.headers());
-        $state.go('home');
-        },function(res){
-        console.log(res);
-         }); 
-        }
-
-        $scope.ModifyCohort=function(cohort_id){
-          Data.set_current_cohortID(cohort_id);
-          $state.go('Modify_Cohort');
-
-        }
-
-
-    
-        $scope.backToHome=function(){
-         $state.go('home');
-        }
-
-
-        $scope.cohort={
-        size:200,
-        openDate:'',
-        closeDate:'',
-        matchDate:''
-        }
-
-
-
-
-        $scope.AddCohort=function(){
-
-          $scope.form_data={
-          cohortSize:$scope.cohort.size,
-          openDate:$scope.cohort.openDate,
-          closeDate:$scope.cohort.closeDate,
-          matchDate:$scope.cohort.matchDate
-          }
-
-          console.log($scope.form_data);
-
-          var req1={
-            method: 'POST',
-            url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId+"/cohorts/",
-            headers: {
-            'Content-type': 'application/json'
-            },
-            data: $scope.form_data
-          }
-          $http(req1).then(function(res){
-          // console.log('Adding cohort successfull');
-          console.log(res);
-          $state.go('home');
-          },function(res){
-          console.log(res);
-          }); 
-        }
-
-
-  }])
-
-.controller('Modify_CohortCtrl',['$scope','$state','Data','$http',
- function($scope,$state,Data,$http){
-
-    $scope.backToManageCohort=function(){
-      $state.go('Cohort_Manage');
-    }
-    $scope.currentID=Data.get_current_cohortID();
-
-    $scope.cohort={
-        size:200,
-        openDate:'',
-        closeDate:'',
-        matchDate:''
-        }
-
-    $scope.Approve=function(){
-      $scope.form_data={
-          cohortSize:$scope.cohort.size,
-          openDate:$scope.cohort.openDate,
-          closeDate:$scope.cohort.closeDate,
-          matchDate:$scope.cohort.matchDate
-          }
-      console.log($scope.form_data);
-
-          var req1={
-            method: 'PATCH',
-            url: "https://api.dev.mbell.me/cohort/"+$scope.currentID+"/",
-            data: $scope.form_data
-          }
-          $http(req1).then(function(res){
-          // console.log('Adding cohort successfull');
-          console.log(res);
-          $state.go('home');
-          },function(res){
-          console.log(res);
-          }); 
-        
-
-
-    }
-
-
-
-
-   }])
-
-
-.controller('Modify_ProgramCtrl',['$scope','$state','Data','$http',
-  function($scope,$state,Data,$http){
-
-    $scope.backToHome=function(){
-      $state.go('home');
-    }
-    $scope.currentProgram=Data.show_program();
-    console.log($scope.currentProgram);
-
-    $scope.newprogram={   // Bind attribute with form data
-           name:$scope.currentProgram.name,
-           description:$scope.currentProgram.description,
-           cohort_size:$scope.currentProgram.defaultCohortSize,
-
-    };
-
-    $scope.form_data={
-      name: $scope.newprogram.name,
-      description: $scope.newprogram.description,
-      defaultCohortSize: $scope.newprogram.cohort_size
-    }
-
-    $scope.Modify=function(){
-      var req = {
-        method: 'PATCH',
-        url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId,
-        headers: {
-          'Content-type': 'application/json'
-        },
-        data: $scope.form_data
-      };
-      $http(req).then(function(res){
-        // console.log('Modify successfull');
-        console.log(res.headers());
-        $state.go('home');
-      },function(res){
-        console.log(res);
-      }); 
-
-
-    }
-    $scope.Delete=function(){
-      var req = {
-        method: 'DELETE',
-        url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId,
-        headers: {
-          'Content-type': 'application/json'
-        },
-        
-      };
-      $http(req).then(function(res){
-        // console.log('Modify successfull');
-        console.log(res.headers());
-        console.log("delete successfully");
-        $state.go('home');
-      },function(res){
-        console.log(res);
-      }); 
-
-    }
-
-
-
-
-  }])
    
 
 
 ////**************This is the controller for creating a new program 
-.controller('create_ProgramCtrl',['$scope','$state','$filter','$http',
+.controller('create_ProgramCtrl',['$scope','$state','$filter',
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-  function($scope,$state,$filter,$http){
+  function($scope,$state,$filter){
         $scope.program={   // Bind attribute with form data
            name:'',
            description:'',
            cohort_size:'',
+           start_date:'',
+           end_date:'',
 
         };
 
@@ -574,34 +344,19 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
         }
 
         $scope.create=function(){
-          // var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
-          // var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
+          var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
+          var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
 
           $scope.form_data={
           name:$scope.program.name,
           description:$scope.program.description,
-          defaultCohortSize:$scope.program.cohort_size
-          // start_date:date1,
-          // end_date:date2
-          }
+          defaultCohortSize:$scope.program.cohort_size,
+          start_date:date1,
+          end_date:date2
+        }
           console.log($scope.form_data);
 
-          var req = {
-           method: 'POST',
-           url: "https://api.dev.mbell.me/programme/",
-           headers: {
-           'Content-type': 'application/json'
-           },
-           data: $scope.form_data
-          };
-          $http(req).then(function(res){
-           console.log(res);
-           $state.go('home');
-          },function(res){
-          console.log(res);
-          });
-
-          }
+        }
 
 
 
