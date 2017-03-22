@@ -80,10 +80,10 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
 
 }])
 
-.controller('settingsCtrl', ['$scope', '$stateParams', '$state', '$localStorage','$http', '$rootScope',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('settingsCtrl', ['$scope', '$stateParams', '$state', '$localStorage','$http', '$rootScope','$cordovaCamera',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,$localStorage,$http,$rootScope) {
+function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCamera) {
 
     $scope.user = {
       first_name:"",
@@ -104,6 +104,29 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope) {
         $scope.user.position = res.data.profile.position;
         $scope.user.department = res.data.profile.department;
     });
+
+
+    $scope.takePicture = function() {
+        var options = { 
+            quality : 75, 
+            destinationType : Camera.DestinationType.DATA_URL, 
+            sourceType : Camera.PictureSourceType.CAMERA, 
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 100,
+            targetHeight: 100,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+ 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            console.log(err);// An error occured. Show a message to the user
+        });
+    }
+
+
 
     $scope.backToHome=function(){
       $state.go('home');
