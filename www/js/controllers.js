@@ -597,8 +597,8 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
         }
 
         $scope.create=function(){
-          // var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
-          // var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
+        // var date1=$filter('date')($scope.program.start_date,"yyyy-MM-dd");
+        // var date2=$filter('date')($scope.program.end_date,"yyyy-MM-dd");
 
           $scope.form_data={
           name:$scope.program.name,
@@ -625,6 +625,26 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
           });
 
           }
+
+    //   $scope.takePicture = function() {
+    //     var options = { 
+    //         quality : 75, 
+    //         destinationType : Camera.DestinationType.DATA_URL, 
+    //         sourceType : Camera.PictureSourceType.CAMERA, 
+    //         allowEdit : true,
+    //         encodingType: Camera.EncodingType.JPEG,
+    //         targetWidth: 100,
+    //         targetHeight: 100,
+    //         popoverOptions: CameraPopoverOptions,
+    //         saveToPhotoAlbum: false
+    //     };
+ 
+    //     $cordovaCamera.getPicture(options).then(function(imageData) {
+    //         $scope.imgURI = "data:image/jpeg;base64," + imageData;
+    //     }, function(err) {
+    //         console.log(err);// An error occured. Show a message to the user
+    //     });
+    // }
 
 
 
