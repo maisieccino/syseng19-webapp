@@ -526,13 +526,18 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
     };
 
-    $scope.form_data={
+    
+
+    $scope.Modify=function(){
+
+      $scope.form_data={
       name: $scope.newprogram.name,
       description: $scope.newprogram.description,
       defaultCohortSize: $scope.newprogram.cohort_size
-    }
+      }
 
-    $scope.Modify=function(){
+      console.log($scope.form_data);
+
       var req = {
         method: 'PATCH',
         url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId,
@@ -543,7 +548,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
       };
       $http(req).then(function(res){
         // console.log('Modify successfull');
-        console.log(res.headers());
+        console.log(res);
         $state.go('home');
       },function(res){
         console.log(res);
