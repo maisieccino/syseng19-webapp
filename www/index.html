@@ -8,11 +8,14 @@
     
     <script src="js/env.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-<!--     <script src="env.js"></script> -->
+    <!--     <script src="env.js"></script> -->
 
 
     <!--  — add more libraries 新增-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+    
+    <script src="js/ng-cordova.min.js"></script>
+    <script src="js/ng-cordova.js"></script>
 
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -91,14 +94,14 @@
       <ion-content ng-controller="menuCtrl" padding="false" class="side-menu-left has-header">
         <div class="item item-avatar" id="side-menu-upper-section">
           <img src="http://keenthemes.com/preview/metronic/theme/assets/pages/media/profile/profile_user.jpg">
-          <h2 style="color: white;"><strong>Mike Andrews</strong></h2>
-          <p style="color: white;">mike.andrews@atos.com</p>
+          <h2 style="color: white;"><strong>{{firstName}} {{lastName}}</strong></h2>
+          <p style="color: white;">{{userEmail}}</p>
         </div>
         <div class="list">
           <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gocontact()"><i class="icon ion-ios-email"></i>Contact</a>
           <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomymentors()"><i class="icon ion-android-contact"></i>My Mentors</a>
           <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gomyMentees()"><i class="icon ion-android-contacts"></i>My Mentees</a>
-          <a class="item item-icon-left" menu-close="" style="text-align:left;"><i class="icon ion-android-settings"></i>Settings</a>
+          <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="goSettings()"><i class="icon ion-android-settings"></i>Settings</a>
           <a class="item item-icon-left" menu-close="" style="text-align:left;" ng-click="gologin()"><i class="icon ion-log-out"></i>Logout</a>
         </div>
       </ion-content>

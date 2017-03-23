@@ -14,6 +14,13 @@ angular.module('app.routes', [])
     cache: false
   })
 
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',  //指定template链接
+    controller: 'settingsCtrl',
+    cache: false
+  })
+
   .state('contactPage', {
     url: '/page4',
     templateUrl: 'templates/contactPage.html',
@@ -78,10 +85,31 @@ angular.module('app.routes', [])
   })
 
   .state('create_Program',{
-    url: '/page100',
-    templateUrl: 'templates/create_Program.html',
+    url: '/createProgram',
+    templateUrl: 'templates/create_program.html',
     controller: 'create_ProgramCtrl',
     cache: false
+  })
+
+  .state('Modify_Program',{
+    url: '/Modify_Program',
+    templateUrl: 'templates/Modify_Program.html',
+    controller:'Modify_ProgramCtrl',
+    cache:false
+  })
+
+  .state('Modify_Cohort',{
+    url: '/Modify_Cohort',
+    templateUrl: 'templates/Modify_Cohort.html',
+    controller:'Modify_CohortCtrl',
+    cache:false
+  })
+
+  .state('Cohort_Manage',{
+    url: '/Cohort_Manage',
+    templateUrl: 'templates/CohortManage.html',
+    controller:'Cohort_ManageCtrl',
+    cache:false
   })
 
   .state('yourInterests', {

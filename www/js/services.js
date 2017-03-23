@@ -4,6 +4,31 @@ angular.module('app.services', ['ngStorage'])
 
 }])
 
+// Service to transfer register details to login page upon successful registration
+.service('registerService', function() {
+  var credentials = [];
+
+  var addCredentials = function(userEmail,password) {
+      credentials.push(userEmail);
+      credentials.push(password);
+  };
+
+  var getEmail = function(){
+      return credentials[0];
+  };
+
+  var getPassword = function(){
+      return credentials[1];
+  };
+
+  return {
+    addCredentials: addCredentials,
+    getEmail: getEmail,
+    getPassword: getPassword
+  };
+
+})
+
 .factory('Data', function(){
        var current_program=null;    
        var Interests=null;
@@ -16,8 +41,18 @@ angular.module('app.services', ['ngStorage'])
         manage:"false"
        };
 
+       var current_cohortID=null;
+
+
+
 
         return{
+            set_current_cohortID:function(id1){
+                current_cohortID=id1;
+            },
+            get_current_cohortID: function(){
+                return current_cohortID;
+            },
             show_program:function(){
                 // return this.current_program;
                 return current_program;
@@ -87,29 +122,97 @@ angular.module('app.services', ['ngStorage'])
 
 })
 
+// Currently unused
+.factory('userProfile', function(){
+       var first_name;
+       var last_name;
+       var userEmail;    
+
+        return{
+            setFirstName: function(firstName){
+                first_name = firstName;
+            },
+            setLastName: function(lastName){
+                last_name = lastName;
+            },
+            setEmail: function(email){
+                userEmail = email;
+            },
+            getFirstName: function(){
+                return first_name;
+            },
+            getLastName: function(){
+                return last_name;
+            },
+            getEmail: function(){
+                return userEmail;
+            }
+        }
+        
+})
+
 ///////This is the program data model control , including the adimin add new programs, the users update the home page from server
 
-// .factory(Program_Control,['$http',function($http){
-//     var program1={
+.factory('Program_Control',['$http',function($http){
+    var AllProgram=[];
+
+    var getData = function() {
+
+        // Angular $http() and then() both return promises themselves 
+        return $http({method:"GET", url:"https://api.dev.mbell.me/programme/"}).then(function(result){
+
+            // What we return here is the data that will be accessible 
+            // to us after the promise resolves
+            return result.data;
+        });
+    };
+    
+    return { getData: getData };
 
 
-//     };
+    return { 
 
-//     var All_programs=[];
 
-//     return{
-//         Show_All_program: function(){
-//             return All_programs;
-//         }
-//         Add_program : function(data,success,error){
-            
-//         }
-//         Update_program: function(){
+        GetAllProgram: function(){
+            var req = {
+            method: 'GET',
+            url: "https://api.dev.mbell.me/programme/",
+            headers: {
+            'Content-type': 'application/json'
+             },
+            };
+           $http(req).then(function(res,callback){
+            AllProgram=res.data;
+            return AllProgram;
+           },function(res){
+           console.log(res.headers());
+          }); 
+        }
+    };
 
-//         }
+}])
 
-//     };
-// }])
+.factory('Cohort_Control',['$http',function($http){
+    var AllCohort=[];
+
+    var getData = function(programID) {
+
+        // Angular $http() and then() both return promises themselves 
+        return $http({method:"GET", url:"https://api.dev.mbell.me/programme/"+programID+"/cohorts/"}).then(function(result){
+
+            // What we return here is the data that will be accessible 
+            // to us after the promise resolves
+            return result.data;
+        });
+    };
+    
+    return { getData: getData };
+
+
+}])
+
+
+
 
 
 

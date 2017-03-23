@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services','ngStorage'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services','ngStorage','ngCordova'])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
   
@@ -16,7 +16,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
 
 
 .config(function ($httpProvider,$ionicConfigProvider,$provide) {  //拦截器,用来拦截请求并在header添加token
-
+    
     $provide.service('myinterceptor',['$localStorage','$q','$injector',function($localStorage,$q,$injector){
 
         //拦截器,用来拦截请求并在header添加token
@@ -30,8 +30,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
                     return config || $q.when(config);
                 },
                 'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
+                    if(response.status === 401 ) {
                         $injector.get('$state').transitionTo('login');  //因为报错或者token过期,返回login page
+                    }
+                    else if (response.status===403) {
+                      $injector.get('$state').transitionTo('home');
                     }
                     return $q.reject(response);
                 }
@@ -40,7 +43,9 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
         }])//结束service
 
      $httpProvider.interceptors.push('myinterceptor'); //结束interceptor push
-    
+      $httpProvider.defaults.headers.patch = {
+      'Content-Type': 'application/json;charset=utf-8'
+     }
   }
 )//结束config
 
