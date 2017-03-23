@@ -13,8 +13,12 @@
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
-      
-      </div>
+      <div ng-if="nonRegistered">
+        <div class="item item-text-wrap">
+          <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
+          <p style="text-align: center;">You are not enrolled in any mentorship programs.</p>
+      </div>  
+    </div>
 
 
 
@@ -38,17 +42,25 @@
 
 
       <div ng-repeat="program in All_Programs" >
-
-      <div class="item item-text-wrap">
-        <h2><strong>{{program.name}}</strong></h2>
-        <p>{{program.description}}</p>
-        <a class="button button-block button-positive button-outline" ng-click="go_program_detail(program)" > Find out more!</a>
-        <a class="button button-block button-royal button-outline" ng-click="go_cohort_editing(program)" > Manage cohorts (admin only)</a>
-        <a class="button button-block button-assertive button-outline" ng-click="go_program_modify(program)">Modify this program (admin only)</a>
-
+        <div class="item item-image" >
+          <img ng-src='img/program-banner.jpg' />
+          <div class='program-caption'>    
+            <p class='program-caption-content' style="color: white;"><strong>{{program.name}}</strong></p>    
+          </div>  
+        </div>  
+        <div class="item item-text-wrap">
+          <h2><strong>About {{program.name}}</strong></h2>
+          <p>{{program.description}}</p>
+          <div ng-if = "!isStaff">
+            <a class="button button-block button-positive button-outline" ng-click="go_program_detail(program)" >Find out more!</a>
+          </div>  
+          <div class="button-bar" ng-if = "isStaff">
+            <a style="font-size: 11px;" class="button button-positive button-outline" ng-click="go_program_detail(program)" >Find out more</a>
+            <a style="font-size: 12px;" class="button button-royal button-outline" ng-click="go_cohort_editing(program)" >Cohorts</a>
+            <a style="font-size: 12px;" class="button button-assertive button-outline" ng-click="go_program_modify(program)">Edit program</a>
+          </div>
+        </div>
       </div>
-      </div>
-
 
     </div>
   </ion-content>

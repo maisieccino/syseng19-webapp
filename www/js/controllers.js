@@ -297,7 +297,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
 
     $scope.All_Programs=[];
-
+    $scope.isStaff;
     var myDataPromise = Program_Control.getData();
 
     myDataPromise.then(function(result) {  
@@ -333,22 +333,17 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
       $state.go('create_Program');
     }
 
-
-
     var req = {
         method: 'GET',
         url: "https://api.dev.mbell.me/user/me/"
     };
 
     $http(req).then(function(res){
-      // var menuData = {
-      //   firstName:res.data.first_name,
-      //   lastName:res.data.last_name,
-      //   email:res.data.email
-      // }
       $localStorage.firstName = res.data.first_name;
       $localStorage.lastName = res.data.last_name;
       $localStorage.email = res.data.email;
+      $scope.isStaff = res.data.isStaff;
+      console.log($scope.isStaff);
       $rootScope.updateMenu();    
     });
 
@@ -472,19 +467,28 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     $scope.currentID=Data.get_current_cohortID();
 
     $scope.cohort={
-        size:200,
+        size:'',
         openDate:'',
         closeDate:'',
         matchDate:''
-        }
-
+    }
+    var req = {
+        method: 'GET',
+        url: "https://api.dev.mbell.me/cohort/"+$scope.currentID+"/"
+    };
+    $http(req).then(function(res){
+        $scope.cohort.size = res.data.cohortSize;
+        $scope.cohort.openDate = new Date(res.data.openDate);
+        $scope.cohort.closeDate = new Date(res.data.closeDate);
+        $scope.cohort.matchDate = new Date(res.data.matchDate);
+    });
     $scope.Approve=function(){
-      $scope.form_data={
-          cohortSize:$scope.cohort.size,
-          openDate:$scope.cohort.openDate,
-          closeDate:$scope.cohort.closeDate,
-          matchDate:$scope.cohort.matchDate
-          }
+    $scope.form_data={
+        cohortSize:$scope.cohort.size,
+        openDate:$scope.cohort.openDate,
+        closeDate:$scope.cohort.closeDate,
+        matchDate:$scope.cohort.matchDate
+    }
       console.log($scope.form_data);
 
           var req1={

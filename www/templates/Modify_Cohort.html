@@ -20,25 +20,25 @@
           <ion-list id="register-list1">
            
           <label class="item item-input" id="create-input100">
-              <span class="input-label">New cohortSize</span>
+              <span class="input-label">Cohort Size</span>
               <input type="text" placeholder="in number" ng-model=cohort.size required="true"> 
             </label>
             <label class="item item-input" id="create-input200">
-              <span class="input-label">New Open Date</span>
+              <span class="input-label">Open Date</span>
               <input type="date" placeholder="" ng-model=cohort.openDate required="true">
             </label>
             <label class="item item-input" id="create-input300">
-              <span class="input-label">New Close Date</span>
+              <span class="input-label">Close Date</span>
               <input type="date" placeholder="" ng-model=cohort.closeDate required="true">
             </label>
             <label class="item item-input" id="create-input400">
-              <span class="input-label">New Match Date</span>
-              <input type="date" placeholder="" ng-model=cohort.matchDate required="true">
+              <span class="input-label">Match Date</span>
+              <input type="date" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" max="{{cohort.closeDate | date:'yyyy-MM-dd'}}" placeholder="" ng-model=cohort.matchDate required="true">
             </label>  
 
         </div>  <!-- 结束card -->
 
-        <a id="create-button1" class="button button-positive button-block" ng-click="Approve()" ng-disabled="registerform.$invalid" >Approve</a>
+        <a id="create-button1" class="button button-positive button-block" ng-click="Approve()" ng-disabled="registerform.$invalid" >Save</a>
         </ion-list>
       </form>
 
