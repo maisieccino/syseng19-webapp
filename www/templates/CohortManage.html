@@ -1,4 +1,4 @@
-<ion-view title="Manage cohorts" >
+<ion-view title="Manage Program Cohorts" >
 
    <ion-nav-buttons side="left" class="has-header">
     <button class="button button-icon icon ion-arrow-left-c" ng-click='backToHome()'></button>
@@ -13,33 +13,14 @@
       <p class="title-name" style="text-align: center; font-size: 19px;">{{currentProgram.name}}</p>
       <div class="spacer" style="height: 16px;"></div>
 
-
-
-      <div ng-repeat="cohort in All_Cohorts" >
-
-      <div class="card list">
-        <!-- <h2><strong>{{cohort.name}}</strong></h2> -->
-        <p>Cohort ID: {{cohort.cohortId}}</p>
-        <p>Cohort Size: {{cohort.cohortSize}}</p>
-        <p>Open Date: {{cohort.openDate}}</p>
-        <p>Close Date: {{cohort.closeDate}}</p>
-        <p>Match Date: {{cohort.matchDate}}</p>
-        <a class="button button-block button-positive button-outline" ng-click="ModifyCohort(cohort.cohortId)" > Modify it</a>
-        <a class="button button-block button-assertive button-outline" ng-click="DeleteCohort(cohort.cohortId)" >Delete it</a>
-       
-
-      </div>
-      </div>
-
-
       <form id="register-form100" name="registerform" >  <!-- 表单 -->
         <!-- card -->
         <div class="card list" >
           <ion-list id="register-list100">
-            <h2><strong>Add new cohort</strong></h2>
+            <div class="item item-divider" style="background-color: #d1eccb ;text-align: center; ">Add new cohort</div>  
             <label class="item item-input" id="create-input100">
-              <span class="input-label">cohortSize</span>
-              <input type="text" placeholder="in number" ng-model=cohort.size required="true"> <!--  testing -->
+              <span class="input-label">Cohort Size</span>
+              <input type="text" placeholder="Default cohort size for this programme" ng-model=cohort.size required="true"> <!--  testing -->
             </label>
             <label class="item item-input" id="create-input200">
               <span class="input-label">Open Date</span>
@@ -47,19 +28,49 @@
             </label>
             <label class="item item-input" id="create-input300">
               <span class="input-label">Close Date</span>
-              <input type="date" placeholder="" ng-model=cohort.closeDate required="true">
+              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" ng-model=cohort.closeDate required="true">
             </label>
             <label class="item item-input" id="create-input400">
               <span class="input-label">Match Date</span>
-              <input type="date" placeholder="" ng-model=cohort.matchDate required="true">
+              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" max="{{cohort.closeDate | date:'yyyy-MM-dd'}}" ng-model=cohort.matchDate required="true">
             </label>
-
+            <div class="padding">
+              <a id="create-button1" class="button button-positive button-block" ng-click="AddCohort()" ng-disabled="registerform.$invalid" >Add Cohort</a>
+            </div>
         </div>  <!-- 结束card -->
-
-        <a id="create-button1" class="button button-positive button-block" ng-click="AddCohort()" ng-disabled="registerform.$invalid" >Add it</a>
        
         </ion-list>
       </form>
+
+      <div class="card list">
+        <div class="item item-divider" style="background-color: #d1eccb ;text-align: center; ">Available cohorts</div>  
+        <div ng-repeat="cohort in All_Cohorts" >
+             <div class="item item-divider" style="text-align: center; font-size:11px; color: red;">{{cohortStatuses[$index]}}</div> 
+            <!-- <h2><strong>{{cohort.name}}</strong></h2> -->
+            <!-- <p>Cohort ID: {{cohort.cohortId}}</p> -->
+            <label class="item item-input" id="create-input100">
+                <span class="input-label">Cohort Size</span>
+                <p style="text-align: right;"><strong>{{cohort.cohortSize}}</strong></p>
+            </label>
+            <label class="item item-input" id="create-input100">
+                <span class="input-label">Open Date</span>
+                <p style="text-align: right;"><strong>{{cohort.openDate | date:'yyyy-MM-dd'}}</strong></p>
+            </label>
+            <label class="item item-input" id="create-input100">
+                <span class="input-label">Close Date</span>
+                <p style="text-align: right;"><strong>{{cohort.closeDate | date:'yyyy-MM-dd'}}</strong></p>
+            </label>
+            <label class="item item-input" id="create-input100">
+                <span class="input-label">Match Date</span>
+                <p style="text-align: right;"><strong>{{cohort.matchDate | date:'yyyy-MM-dd'}}</strong></p>
+            </label>
+            <div class="button-bar padding">
+              <a class="button button-positive" ng-click="ModifyCohort(cohort.cohortId)">Edit</a>
+              <a class="button button-assertive" ng-click="DeleteCohort(cohort.cohortId)">Delete</a>
+            </div>       
+        </div>
+      </div>
+
 
 
     </div>
