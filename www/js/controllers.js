@@ -23,6 +23,7 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
         $scope.firstName = $localStorage.firstName;
         $scope.lastName = $localStorage.lastName;
         $scope.userEmail = $localStorage.email;
+        $scope.isStaff = $localStorage.isStaff;
     }
     $scope.gohome=function(){
         $state.go('home');
@@ -45,6 +46,10 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
     }
     $scope.goSettings=function(){
         $state.go('settings');
+    }
+    
+    $scope.gocreate=function(){
+      $state.go('create_Program');
     }
 
 }])
@@ -328,11 +333,6 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     }
 
 
-
-    $scope.gocreate=function(){
-      $state.go('create_Program');
-    }
-
     var req = {
         method: 'GET',
         url: "https://api.dev.mbell.me/user/me/"
@@ -342,6 +342,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
       $localStorage.firstName = res.data.first_name;
       $localStorage.lastName = res.data.last_name;
       $localStorage.email = res.data.email;
+      $localStorage.isStaff = res.data.isStaff;
       $scope.isStaff = res.data.isStaff;
       console.log($scope.isStaff);
       $rootScope.updateMenu();    
@@ -376,17 +377,35 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 }])
  
 
-.controller('Cohort_ManageCtrl',['$scope','$state','Data','$http','Cohort_Control',
-  function($scope,$state,Data,$http,Cohort_Control){
+.controller('Cohort_ManageCtrl',['$scope','$state','Data','$http','Cohort_Control', '$filter',
+  function($scope,$state,Data,$http,Cohort_Control,$filter){
 
         $scope.currentProgram=Data.show_program();
         $scope.All_Cohorts=[];
-
+        $scope.cohortStatuses=[];
         var myDataPromise = Cohort_Control.getData($scope.currentProgram.programmeId);
-
+        var todayDate = (new Date()).toISOString().slice(0,10).replace(/-/g,"-");
         myDataPromise.then(function(result) {  
-        $scope.All_Cohorts= result;
-        console.log($scope.All_Cohorts);
+          $scope.All_Cohorts= result;
+          // Printing status of cohorts
+          for(var i = 0; i < $scope.All_Cohorts.length; i++){
+            var startDate =  $filter('date')($scope.All_Cohorts[i].openDate, "yyyy-MM-dd");
+            var endDate =  $filter('date')($scope.All_Cohorts[i].closeDate, "yyyy-MM-dd");
+            var matchDate =  $filter('date')($scope.All_Cohorts[i].matchDate, "yyyy-MM-dd");
+            if(todayDate >= startDate && todayDate <= endDate){
+              $scope.cohortStatuses[i] = "This cohort is active";
+            }
+            if(todayDate >= startDate && todayDate <= endDate && todayDate === matchDate){
+              $scope.cohortStatuses[i] = "This cohort is active. Matching is commencing today!";
+            }
+            if(todayDate < startDate){
+              $scope.cohortStatuses[i] = "Cohort has yet to start";
+            }
+            if(todayDate > endDate){
+              $scope.cohortStatuses[i] = "Cohort has passed please renew or delete this cohort";
+            }
+          }
+          console.log($scope.All_Cohorts);
         });
 
         $scope.DeleteCohort=function(cohort_id){
@@ -418,7 +437,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
 
         $scope.cohort={
-        size:200,
+        size:'',
         openDate:'',
         closeDate:'',
         matchDate:''
