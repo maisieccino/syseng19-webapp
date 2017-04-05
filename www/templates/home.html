@@ -11,8 +11,8 @@
         <div class="item item-text-wrap">
           <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
           <p style="text-align: center;">You are not enrolled in any mentorship programs.</p>
-      </div>  
-    </div>
+        </div>  
+      </div>
 
 
 
@@ -20,7 +20,7 @@
     <!-- Other programs -->
     <div class="card" id="home-card22" style="padding-bottom: 20px;">
       <div class="item item-divider" style="background-color: #d1eccb;">
-        You are eligable to enroll in
+        Available Mentor Programs
       </div>  
 
      <!--  <div ng-hide={{learnFaster}}>
@@ -34,7 +34,12 @@
       </div> -->
       <!-- </div> --> <!-- finish ng-hide -->
 
-
+      <div ng-if="noPrograms">
+        <div class="item item-text-wrap">
+          <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
+          <p style="text-align: center;">There are currently no mentor programs.</p>
+        </div>  
+      </div>
       <div ng-repeat="program in All_Programs" >
         <div class="item item-image" >
           <img ng-src='img/program-banner.jpg' />
@@ -44,7 +49,7 @@
         </div>  
         <div class="item item-text-wrap">
           <h2><strong>About {{program.name}}</strong></h2>
-          <p>{{program.description}}</p>
+          <p>{{ program.description | limitTo: 110 }}{{program.description.length > 110 ? '&hellip;' : ''}}</p>
           <div ng-if = "!isStaff">
             <a class="button button-block button-positive button-outline" ng-click="go_program_detail(program)" >Find out more!</a>
           </div>  
@@ -62,7 +67,7 @@
   <ion-tabs class="tabs-icon-top tabs-positive">
     <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
     <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
-    <ion-tab title="Notifications" icon="ion-android-notifications" badge="3" badge style="badge-assertive" href=""></ion-tab>
+    <ion-tab ui-sref="notifications" title="Notifications" icon="ion-android-notifications"></ion-tab>
   </ion-tabs>
 </ion-view>
 

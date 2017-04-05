@@ -38,13 +38,19 @@
               <span class="input-label">Position</span>
               <input type="text" placeholder="" value="abc" ng-model=user.position required="true">
             </label> 
+        <!-- <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+        <img ng-show="imgURI === undefined" ng-src="http://placehold.it/40x40"> -->
 
-    <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
-    <img ng-show="imgURI === undefined" ng-src="http://placehold.it/40x40">
-
-        </div>  <!-- 结束card -->
-
-        <a id="create-button1" class="button button-positive button-block" ng-click="takePicture()"> Upload a image</a>
+        </div> 
+        <!-- <div class="card list" >
+          <div class="item item-divider" style="background-color: #cfdef8 ;text-align: center; "><i class="icon ion-star"></i>Tags</div>
+          <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" placeholder="Search Tags" ng-model="search">
+          </label>
+          <ion-checkbox ng-repeat="interest in interests | filter: search | limitTo:4" value="{{interest}}" ng-click="toggleSelection(interest)" ng-checked="checkedSelections(interest)">{{interest}}</ion-checkbox> 
+        </div> -->
+        <!-- <a id="create-button1" class="button button-positive button-block" ng-click="takePicture()"> Upload a image</a> -->
         <a id="create-button1" class="button button-positive button-block" ng-click="saveProfile()" ng-disabled="registerform.$invalid" >Save</a>
         </ion-list>
       </form>

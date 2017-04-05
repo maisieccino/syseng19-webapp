@@ -1,0 +1,19 @@
+<ion-view title="Notifications" id="notifications">
+  <ion-content class="has-header has-footer">
+    <div class="list">
+      <div class="item item-divider" style="background-color: #cfdef8;">Program Related</div>
+      <div ng-repeat="notification in programNotifications" >
+        <div ng-click="go_program_detail(notification)"  class="item item-text-wrap" style="font-size: 14px;"><strong>A new program {{notification.name}}</strong> created by {{notification.createdBy.first_name}} {{notification.createdBy.last_name}} is available! Find Out More!</div>
+      </div>
+      <div class="item item-divider" style="background-color: #cfdef8;">Cohort Related</div>
+      <div ng-repeat="cohort in activeCohorts" >
+        <div ng-click="go_program_detail(cohort.programme)" class="item item-text-wrap" style="font-size: 14px;">The program <strong>{{cohort.programme.name}}</strong> currently has an active cohort! It is active until <strong>{{cohort.closeDate | date:'yyyy-MM-dd'}}.</strong> Click to find out more!</div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-tabs class="tabs-icon-top tabs-positive">
+    <ion-tab ui-sref="home" title="Home" icon="ion-home"></ion-tab>
+    <ion-tab ui-sref="profile" title="Profile" icon="ion-person"></ion-tab>
+    <ion-tab ui-sref="notifications" title="Notifications" icon="ion-android-notifications"></ion-tab>
+  </ion-tabs>
+</ion-view>

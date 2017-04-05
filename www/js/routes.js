@@ -14,6 +14,13 @@ angular.module('app.routes', [])
     cache: false
   })
 
+  .state('notifications', {
+    url: '/notifications',
+    templateUrl: 'templates/notifications.html',  //指定template链接
+    controller: 'notificationCtrl',
+    cache: false
+  })
+
   .state('settings', {
     url: '/settings',
     templateUrl: 'templates/settings.html',  //指定template链接

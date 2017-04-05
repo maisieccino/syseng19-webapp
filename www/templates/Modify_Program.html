@@ -10,7 +10,7 @@
   <div class="card" id="register-card">
     <div class="item">
       <div class="spacer" style="height: 16px;"></div>
-      <p class="title-name" style="text-align: center; font-size: 19px;">ATOS Mentor Match</p>
+      <p class="title-name" style="text-align: center; font-size: 19px;">Edit {{newprogram.name}}</p>
       <div class="spacer" style="height: 16px;"></div>
 
 
@@ -34,7 +34,7 @@
         </div>  <!-- 结束card -->
         <div class="button-bar padding">
           <a id="create-button1" class="button button-positive" ng-click="Modify()" ng-disabled="registerform.$invalid" >Save</a>
-          <a id="create-button1" class="button button-assertive" ng-click="Delete()" >Delete</a>
+          <a id="create-button1" class="button button-assertive" ng-click="alertDelete()" >Delete</a>
         </div>  
         </ion-list>
       </form>

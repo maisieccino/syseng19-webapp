@@ -25,7 +25,7 @@
             </label>
             <label class="item item-input" id="create-input200">
               <span class="input-label">Open Date</span>
-              <input type="date" placeholder="" ng-model=cohort.openDate required="true">
+              <input type="date" placeholder=""  min="{{todayDate | date:'yyyy-MM-dd'}}" ng-model=cohort.openDate required="true">
             </label>
             <label class="item item-input" id="create-input300">
               <span class="input-label">Close Date</span>
