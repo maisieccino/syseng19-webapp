@@ -6,7 +6,7 @@
     <div class="program-banner" style="top:-10px;">  
       <img ng-src='img/program-banner.jpg' />    
       <div class='program-caption'>    
-        <p class='program-caption-content'>What is Learn Faster Mentoring?</p>    
+        <p class='program-caption-content'>What is {{program.name}}?</p>    
       </div>   
     </div>
     <div class="program-description-section" style="padding: 20px;">
@@ -20,7 +20,9 @@
         </p>
       </div>
       <div class="box-positive" style="text-align: center;">Created by: {{program.createdBy.first_name}} {{program.createdBy.last_name}} ({{program.createdBy.email}})</div>
-      <a style="margin-top: 20px;" ng-click="goregisterProgram()" id="learnFasterMentoring-button59" class="button button-block button-positive">Register here!</a>
+      <div ng-if="!disableRegisterProgram" class="box-positive" style="text-align: center; margin-top: 10px;">Active cohort valid until <strong>{{activeCohorts.closeDate | date:'yyyy-MM-dd'}}</strong>! Matching commences at <strong>{{activeCohorts.matchDate | date:'yyyy-MM-dd'}}</strong></div>
+      <div ng-if="disableRegisterProgram" class="box-negative" style="text-align: center; margin-top: 10px;">Currently no active cohorts for this program!</div>
+      <a style="margin-top: 20px;" ng-click="goregisterProgram()" ng-disabled="disableRegisterProgram" id="learnFasterMentoring-button59" class="button button-block button-positive">Register here!</a>
     </div>
   </ion-content>
 </ion-view>

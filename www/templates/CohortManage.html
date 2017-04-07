@@ -17,18 +17,18 @@
         <!-- card -->
         <div class="card list" >
           <ion-list id="register-list100">
-            <div class="item item-divider" style="background-color: #d1eccb ;text-align: center; ">Add new cohort</div>  
+            <div class="item item-divider" style="background-color: #cfdef8 ;text-align: center; ">Add new cohort</div>  
             <label class="item item-input" id="create-input100">
               <span class="input-label">Cohort Size</span>
-              <input type="text" placeholder="Default cohort size for this programme" ng-model=cohort.size required="true"> <!--  testing -->
+              <input type="text" placeholder="Cohort size for this programme" ng-model=cohort.size required="true"> <!--  testing -->
             </label>
             <label class="item item-input" id="create-input200">
               <span class="input-label">Open Date</span>
-              <input type="date" placeholder="" ng-model=cohort.openDate required="true">
+              <input type="date" placeholder="" min="{{todayDate | date:'yyyy-MM-dd'}}" ng-model=cohort.openDate required="true">
             </label>
             <label class="item item-input" id="create-input300">
               <span class="input-label">Close Date</span>
-              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" ng-model=cohort.closeDate required="true">
+              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-nMM-dd'}}" ng-model=cohort.closeDate required="true">
             </label>
             <label class="item item-input" id="create-input400">
               <span class="input-label">Match Date</span>
@@ -43,7 +43,13 @@
       </form>
 
       <div class="card list">
-        <div class="item item-divider" style="background-color: #d1eccb ;text-align: center; ">Available cohorts</div>  
+        <div class="item item-divider" style="background-color: #cfdef8 ;text-align: center; ">Available cohorts</div>
+        <div ng-if="noCohorts">
+          <div class="item item-text-wrap">
+            <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
+            <p style="text-align: center;">There are currently no available cohorts.</p>
+          </div>
+        </div>  
         <div ng-repeat="cohort in All_Cohorts" >
              <div class="item item-divider" style="text-align: center; font-size:11px; color: red;">{{cohortStatuses[$index]}}</div> 
             <!-- <h2><strong>{{cohort.name}}</strong></h2> -->
@@ -66,7 +72,7 @@
             </label>
             <div class="button-bar padding">
               <a class="button button-positive" ng-click="ModifyCohort(cohort.cohortId)">Edit</a>
-              <a class="button button-assertive" ng-click="DeleteCohort(cohort.cohortId)">Delete</a>
+              <a class="button button-assertive" ng-click="alertDelete(cohort.cohortId)">Delete</a>
             </div>       
         </div>
       </div>

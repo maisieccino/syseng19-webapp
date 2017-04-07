@@ -61,7 +61,7 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
     $scope.lastName = "";
     $scope.userBio = "";
     $scope.currentRole = "";
-    //$scope.email = "";
+    $scope.tags;
     $scope.enrolledPrograms = [];
     $scope.mentors = ["John Smith", "Collin Wong"];
     $scope.mentees = ["Christopher Lau", "Collin Wong"];
@@ -78,7 +78,8 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
         $scope.userBio = res.data.profile.bio;
         $scope.currentRole = res.data.profile.position;
         $scope.email = res.data.email;
-        console.log($scope.email);
+        $scope.tags = res.data.tags;
+        console.log(res.data);
     },function(res){
         console.log(res.headers());
     });
@@ -98,6 +99,10 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
       position:""
     };
 
+    $scope.interests=["Leadership","Career Development","Big data analytics","Performance Management","Microsoft Applications","Trello","Project Management","LinkedIn","Facebook","Security","Twitter"];
+
+    $scope.interestSelection = [];
+
     var req = {
         method: 'GET',
         url: "https://api.dev.mbell.me/user/me/"
@@ -108,8 +113,28 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
         $scope.user.bio = res.data.profile.bio;
         $scope.user.position = res.data.profile.position;
         $scope.user.department = res.data.profile.department;
+        for(var i = 0; i < res.data.tags.length; i++){
+          $scope.interestSelection.push(res.data.tags[i]);          
+        }
     });
 
+    $scope.toggleSelection = function(interest){
+      var index = $scope.interestSelection.indexOf(interest);
+      if (index>-1) {
+          $scope.interestSelection.splice(index,1);
+        }else{
+          $scope.interestSelection.push(interest);
+      }
+      console.log($scope.interestSelection);
+    }
+
+    $scope.checkedSelections = function(interest){
+      if ($scope.interestSelection.indexOf(interest)>-1) {
+          return true;
+      }else{
+          return false;
+      }
+    }
 
     $scope.takePicture = function() {
         var options = { 
@@ -146,8 +171,13 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
         profile:{
           position:$scope.user.position,
           department:$scope.user.department,
-          bio:$scope.user.bio
+          bio:$scope.user.bio,
+          tags:[]
         } 
+      }
+
+      for(var i = 0; i < $scope.interestSelection.length; i++){
+        formData.profile.tags.push($scope.interestSelection[i]);
       }
 
       console.log(formData);
@@ -174,7 +204,47 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
     }
 
 }])
-   
+
+.controller('notificationCtrl', ['$scope', '$stateParams','$http','Data','$state',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams,$http,Data,$state) {
+    // Notifications related to programs
+    $scope.programNotifications = [];
+    $scope.activeCohorts = [];
+
+    $scope.go_program_detail=function(program){
+      // console.log(program);
+      Data.set_current_program(program);
+      Data.show_program();
+      $state.go('learnFasterMentoring');
+    }
+
+    var req = {
+      method: 'GET',
+      url: "https://api.dev.mbell.me/programme/"
+    };
+    
+    function getActiveCohorts(programID){
+      var req2 = {
+        method: 'GET',
+        url: "https://api.dev.mbell.me/programme/" + programID + "/cohorts/active"
+      }
+      $http(req2).then(function(response){
+        $scope.activeCohorts.push(response.data);
+      });
+    }
+
+    $http(req).then(function(res){
+      $scope.programNotifications = res.data;
+      for(var i = 0; i < $scope.programNotifications.length; i++){
+        getActiveCohorts($scope.programNotifications[i].programmeId);
+      }
+    });
+
+}])
+
+
 .controller('contactPageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
@@ -304,11 +374,13 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     $scope.All_Programs=[];
     $scope.isStaff;
     var myDataPromise = Program_Control.getData();
+    $scope.noPrograms;
 
     myDataPromise.then(function(result) {  
-       $scope.All_Programs= result;
-       console.log($scope.All_Programs);
-
+      $scope.All_Programs = result;
+      $scope.noPrograms = ($scope.All_Programs.length == 0);       
+      console.log($scope.All_Programs);
+      console.log("There are no programs now : " + $scope.noPrograms);
     });
 
     $scope.go_program_detail=function(program){
@@ -377,51 +449,69 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 }])
  
 
-.controller('Cohort_ManageCtrl',['$scope','$state','Data','$http','Cohort_Control', '$filter',
-  function($scope,$state,Data,$http,Cohort_Control,$filter){
+.controller('Cohort_ManageCtrl',['$scope','$state','Data','$http','Cohort_Control', '$filter','$ionicPopup',
+  function($scope,$state,Data,$http,Cohort_Control,$filter,$ionicPopup){
 
         $scope.currentProgram=Data.show_program();
         $scope.All_Cohorts=[];
         $scope.cohortStatuses=[];
+        $scope.noCohorts;
         var myDataPromise = Cohort_Control.getData($scope.currentProgram.programmeId);
-        var todayDate = (new Date()).toISOString().slice(0,10).replace(/-/g,"-");
+        $scope.todayDate = (new Date()).toISOString().slice(0,10).replace(/-/g,"-");
+
         myDataPromise.then(function(result) {  
           $scope.All_Cohorts= result;
-          // Printing status of cohorts
+          //Printing status of cohorts
           for(var i = 0; i < $scope.All_Cohorts.length; i++){
             var startDate =  $filter('date')($scope.All_Cohorts[i].openDate, "yyyy-MM-dd");
             var endDate =  $filter('date')($scope.All_Cohorts[i].closeDate, "yyyy-MM-dd");
             var matchDate =  $filter('date')($scope.All_Cohorts[i].matchDate, "yyyy-MM-dd");
-            if(todayDate >= startDate && todayDate <= endDate){
+            if($scope.todayDate >= startDate && $scope.todayDate <= endDate){
               $scope.cohortStatuses[i] = "This cohort is active";
             }
-            if(todayDate >= startDate && todayDate <= endDate && todayDate === matchDate){
+            if($scope.todayDate >= startDate && $scope.todayDate <= endDate && $scope.todayDate === matchDate){
               $scope.cohortStatuses[i] = "This cohort is active. Matching is commencing today!";
             }
-            if(todayDate < startDate){
+            if($scope.todayDate < startDate){
               $scope.cohortStatuses[i] = "Cohort has yet to start";
             }
-            if(todayDate > endDate){
+            if($scope.todayDate > endDate){
               $scope.cohortStatuses[i] = "Cohort has passed please renew or delete this cohort";
             }
           }
+          $scope.noCohorts = ($scope.All_Cohorts.length == 0);
           console.log($scope.All_Cohorts);
+          console.log($scope.noCohorts);
         });
 
         $scope.DeleteCohort=function(cohort_id){
           var req = {
           method: 'DELETE',
           url: "https://api.dev.mbell.me/cohort/"+cohort_id+"/",
-          };
-        
+        };        
         $http(req).then(function(res){
-        // console.log('Modify successfull');
-        console.log(res.headers());
-        $state.go('home');
-        },function(res){
-        console.log(res);
-         }); 
+          // console.log('Modify successfull');
+          console.log(res.headers());
+          $state.go('home');
+          },function(res){
+          console.log(res);
+           }); 
         }
+
+        // Alert Pop up to confirm delete of cohort
+        $scope.alertDelete = function(cohort_id) {
+          var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete Cohort',
+            template: 'Are you sure you want to delete this Cohort?'
+          });
+          confirmPopup.then(function(res) {
+            if(res) {
+              $scope.DeleteCohort(cohort_id);
+            }else {
+              console.log('No delete');
+            }
+          });
+        };
 
         $scope.ModifyCohort=function(cohort_id){
           Data.set_current_cohortID(cohort_id);
@@ -484,6 +574,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
       $state.go('Cohort_Manage');
     }
     $scope.currentID=Data.get_current_cohortID();
+    $scope.todayDate = (new Date()).toISOString().slice(0,10).replace(/-/g,"-");
 
     $scope.cohort={
         size:'',
@@ -533,8 +624,8 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
    }])
 
 
-.controller('Modify_ProgramCtrl',['$scope','$state','Data','$http',
-  function($scope,$state,Data,$http){
+.controller('Modify_ProgramCtrl',['$scope','$state','Data','$http','$ionicPopup',
+  function($scope,$state,Data,$http,$ionicPopup){
 
     $scope.backToHome=function(){
       $state.go('home');
@@ -563,7 +654,7 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
       var req = {
         method: 'PATCH',
-        url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId,
+        url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId+"/",
         headers: {
           'Content-type': 'application/json'
         },
@@ -579,10 +670,10 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
 
     }
-    $scope.Delete=function(){
+    $scope.Delete=function(programmeId){
       var req = {
         method: 'DELETE',
-        url: "https://api.dev.mbell.me/programme/"+$scope.currentProgram.programmeId,
+        url: "https://api.dev.mbell.me/programme/" + programmeId + "/",
         headers: {
           'Content-type': 'application/json'
         },
@@ -596,8 +687,22 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
       },function(res){
         console.log(res);
       }); 
-
     }
+
+    // Alert Pop up to confirm delete program
+    $scope.alertDelete = function() {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Delete Program',
+        template: 'Are you sure you want to delete this Program? All cohorts and participants associated with this program is deleted as well!'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          $scope.Delete($scope.currentProgram.programmeId);
+        }else {
+          console.log('No delete');
+        }
+      });
+    };
 
 
 
@@ -708,14 +813,33 @@ function ($scope, $stateParams,$state) {
     }
 }])
 
-.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data','$ionicHistory',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('learnFasterMentoringCtrl', ['$scope', '$stateParams', '$state','$rootScope','$localStorage','Data','$ionicHistory','$http',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,$state,$rootScope,$localStorage,Data,$ionicHistory) {
+function ($scope, $stateParams,$state,$rootScope,$localStorage,Data,$ionicHistory,$http) {
         var temp=Data.show_program();
         $scope.program=temp;
-        console.log(temp);  
-        $scope.longText = "This is a programme open to all Atos UK&amp;I staff (9000 people). Anyone can offer themselves as a mentor or request mentoring. It is the main use of the App. We are planning to open the offer for mentoring every quarter. You can request mentoring on up to 2 topics, but you can offer it on a wider range. If people need mentoring on more than 2 topics they should finish the mentoring on their top 2 proprieties and then go back and request another mentor in a later quarter, so they can do this as often as they like. As it is based around expertise and need it doesn’t matter if the mentor is more junior than the mentee, it’s all about what people know. Mentors should not have more than 2 mentees. Mentees should only have one mentor at a time from this scheme ";
+        $scope.activeCohort = null;
+        $scope.disableRegisterProgram = true;
+        console.log(temp);
+        var req = {
+          method: 'GET',
+          url: "https://api.dev.mbell.me/programme/" + $scope.program.programmeId + "/cohorts/active"
+        };
+        $http(req).then(function(res){
+          $scope.activeCohorts = res.data;
+          console.log($scope.activeCohorts);
+          $scope.disableRegisterProgram = (!isActiveCheck($scope.activeCohorts));
+          console.log("disable register button: " + $scope.disableRegisterProgram);            
+        });
+
+        function isActiveCheck(activeCohort){
+          if(activeCohort != null){
+            return true;
+          }else{
+            return false;
+          }
+        }  
         $scope.goregisterProgram=function(){
             $state.go('registerProgram');
         }
@@ -844,7 +968,6 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
             Data.selection_add(interests);
         }
         console.log(Data.return_selection());
-
     };
 
     $scope.judgeSelection=function judgeSelection(interests){
@@ -852,7 +975,6 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
             return true;
         }
         else return false;
-
     }
     
 
