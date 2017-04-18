@@ -119,6 +119,13 @@ angular.module('app.routes', [])
     cache:false
   })
 
+  .state('chooseTopthree',{
+    url:'/chooseTopthree',
+    templateUrl:'templates/chooseTopthree.html',
+    controller:'chooseTopthreeCtrl',
+    cache:false
+  })
+
   .state('yourInterests', {
     url: '/page11',
     templateUrl: 'templates/yourInterests.html',

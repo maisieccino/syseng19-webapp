@@ -42,6 +42,7 @@ angular.module('app.services', ['ngStorage'])
        };
 
        var current_cohortID=null;
+       var current_participantID=null;
 
 
 
@@ -53,6 +54,14 @@ angular.module('app.services', ['ngStorage'])
             get_current_cohortID: function(){
                 return current_cohortID;
             },
+
+            set_current_participantID(id2){
+                current_participantID=id2;
+            },
+            get_current_participantID(){
+                return current_participantID;
+            },
+
             show_program:function(){
                 // return this.current_program;
                 return current_program;

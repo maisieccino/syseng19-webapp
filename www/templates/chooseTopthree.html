@@ -1,0 +1,32 @@
+<ion-view title="Choose your mentors" id="page10">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header" style="background-color: #7ec9f8;">
+    <div class="card" id="register-card">
+    <div class="item">
+      <div class="spacer" style="height: 16px;"></div>
+      <p class="title-name" style="text-align: center; font-size: 19px;">Choose top three mentors you like </p>
+      <div class="spacer" style="height: 16px;"></div>
+
+
+      <form id="register-form1" name="choosetop3form" >  <!-- 表单 -->
+        <!-- card -->
+
+        <div class="card list" >
+          <ion-list id="register-list1">
+            <ion-list radio-group  id="registerProgram-form12" class="list" ng-model="mymentype" >
+              <ion-radio id="registerProgram-radio6"  ng-model="mymentype" value="mentee" ng-click="seta()" checked="false">Mentor1
+              </ion-radio>
+            </ion-list> 
+          </ion-list>
+        </div>  
+
+        <!-- 结束card --> 
+
+        <a ng-click="submitChoice()" id="registerProgram-button60" class="button button-positive button-block"><i class="icon ion-edit"></i> Submit Your Choice!</a>
+      </form>
+
+    </div>
+  </ion-content>
+</ion-view>
