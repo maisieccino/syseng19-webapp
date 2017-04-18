@@ -47,6 +47,9 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
     $scope.goSettings=function(){
         $state.go('settings');
     }
+    $scope.goTopThree=function(){
+      $state.go('chooseTopthree');
+    }
     
     $scope.gocreate=function(){
       $state.go('create_Program');
@@ -351,10 +354,6 @@ function ($scope, $stateParams, $state,$localStorage,Auth,$rootScope,$http,regis
             $localStorage.token=res.data.access_token; //store the returned token in localstorage
             console.log(req);
             console.log($localStorage.token);
-
-            // $http.defaults.headers.common['Token'] = $localStorage.token || {};
-
-
             $state.go('home');
         },function(res){
         $scope.errorMsg = "Login Failed. Please enter correct credentials!"
@@ -445,6 +444,17 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
         $state.go('learnFasterMentoring');
         
     }
+
+    var req = {
+          method: 'GET',
+          url: "https://api.dev.mbell.me/participant/" ,
+        };
+
+        $http(req).then(function(res){
+          console.log(res);
+        },function(res){
+        console.log(res);
+        });
 
 }])
  
@@ -830,7 +840,11 @@ function ($scope, $stateParams,$state,$rootScope,$localStorage,Data,$ionicHistor
           $scope.activeCohorts = res.data;
           console.log($scope.activeCohorts);
           $scope.disableRegisterProgram = (!isActiveCheck($scope.activeCohorts));
-          console.log("disable register button: " + $scope.disableRegisterProgram);            
+          console.log("disable register button: " + $scope.disableRegisterProgram);     
+
+          Data.set_current_cohortID($scope.activeCohorts.cohortId);
+          // console.log(Data.get_current_cohortID());
+
         });
 
         function isActiveCheck(activeCohort){
@@ -920,44 +934,50 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
     console.log($scope.isMentor);
     $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
     
-    $scope.gohome=function(){
+    $scope.gohome=function(){   //submit the data
         console.log($localStorage.token);
-        var temp=$scope.temp.times_perweek; //Add times per week
-        Data.set_times_perweek(temp);
+        // var temp=$scope.temp.times_perweek; //Add times per week
+        // Data.set_times_perweek(temp);
+        var ismentor;
+        if (Data.show_mentype()=='mentor') {ismentor="true";}
+        else {ismentor="false"};
         $scope.Final_Data={
-          program_name:Data.show_program(),
-          role:Data.show_mentype(),
-          selection:Data.return_selection(),
-          contact_type:Data.Interests,
-          times:Data.get_times_perweek()
+          // program_name:Data.show_program(),
+          isMentor:ismentor,
+          tags:Data.return_selection(),
+          // contact_type:Data.Interests,
+          // times:Data.get_times_perweek()
         }
 
         console.log($scope.Final_Data);
- 
+        $scope.cohortid=Data.get_current_cohortID();
+        console.log($scope.cohortid);
 
-////////****************发送数据************************
 
+        var req = {
+          method: 'POST',
+          url: "https://api.dev.mbell.me/cohort/" + $scope.cohortid + "/register",
+          data:$scope.Final_Data
+        };
 
-        Mentorship_program.register($scope.Final_Data,function(res){
-          if (res.type == false) {  //function success callback
-                    alert(res.data)
-                } else {
-                    Data.clear_selection();
-                    alert("register successfull!")
-                    $state.go('home');
-                }
-
-        },function(res){
+        $http(req).then(function(res){
           console.log(res);
-          Data.clear_selection();
+          Data.set_current_participantID(res.data.participantId);
+          console.log(Data.get_current_participantID());
+          $state.go('home');
+        },function(res){
+        console.log(res);
+        });
 
-        });
 
 
 
-        // Data.clear_selection();
-        // $state.go('home');
-     }
+
+
+
+ 
+    }
+     
      
     $scope.toggleSelection=function toggleSelection(interests){
         var idx=Data.show_selection_index(interests);
@@ -996,6 +1016,31 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
      // console.log($scope.Final_Data);
     	$state.go('registerProgram');
     }
+}])
+
+
+.controller('chooseTopthreeCtrl',['$scope','Data','$http','$state',
+function($scope,Data,$http,$state){
+
+      var participantID=Data.get_current_participantID();
+      console.log(participantID);
+
+      $scope.getback=function(){
+        $state.go('home');
+      }
+
+
+
+      // $scope.submitChoice(){
+
+      // }
+
+
+
+
+
+
+
 }])
 
 
