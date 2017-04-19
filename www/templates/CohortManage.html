@@ -28,11 +28,11 @@
             </label>
             <label class="item item-input" id="create-input300">
               <span class="input-label">Close Date</span>
-              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-nMM-dd'}}" ng-model=cohort.closeDate required="true">
+              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" ng-model=cohort.closeDate required="true">
             </label>
             <label class="item item-input" id="create-input400">
               <span class="input-label">Match Date</span>
-              <input type="date" placeholder="" min="{{cohort.openDate | date:'yyyy-MM-dd'}}" max="{{cohort.closeDate | date:'yyyy-MM-dd'}}" ng-model=cohort.matchDate required="true">
+              <input type="date" placeholder="" min="{{cohort.closeDate | date:'yyyy-MM-dd'}}" ng-model=cohort.matchDate required="true">
             </label>
             <div class="padding">
               <a id="create-button1" class="button button-positive button-block" ng-click="AddCohort()" ng-disabled="registerform.$invalid" >Add Cohort</a>

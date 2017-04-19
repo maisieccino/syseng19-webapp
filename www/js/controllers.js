@@ -47,10 +47,6 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
     $scope.goSettings=function(){
         $state.go('settings');
     }
-    $scope.goTopThree=function(){
-      $state.go('chooseTopthree');
-    }
-    
     $scope.gocreate=function(){
       $state.go('create_Program');
     }
@@ -70,7 +66,7 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
     $scope.mentees = ["Christopher Lau", "Collin Wong"];
     $scope.noMentors = ($scope.mentors.length == 0) ? true : false;
     $scope.noMentees = ($scope.mentees.length == 0) ? true : false;
-    $scope.noEnrolledPrograms = ($scope.enrolledPrograms.length == 0) ? true : false;
+    
     var req = {
         method: 'GET',
         url: "https://api.dev.mbell.me/user/me/"
@@ -85,6 +81,21 @@ function ($scope, $stateParams,$state,Data,$localStorage,$http,$rootScope) {
         console.log(res.data);
     },function(res){
         console.log(res.headers());
+    });
+    
+    // Get mentor programmes
+    var req1 = {
+        method: 'GET',
+        url: "https://api.dev.mbell.me/participant/"
+    };
+    $http(req1).then(function(res){
+        for(var i = 0; i < res.data.length; i++){
+          $scope.enrolledPrograms.push(res.data[i].cohort.programme.name);
+        }
+        $scope.noEnrolledPrograms = $scope.enrolledPrograms.length == 0;
+        console.log($scope.enrolledPrograms);
+    },function(res){
+        
     });
 
 }])
@@ -102,7 +113,7 @@ function ($scope, $stateParams,$state,$localStorage,$http,$rootScope,$cordovaCam
       position:""
     };
 
-    $scope.interests=["Leadership","Career Development","Big data analytics","Performance Management","Microsoft Applications","Trello","Project Management","LinkedIn","Facebook","Security","Twitter"];
+    $scope.interests=["Leadership","Career Development","Big data analytics","Performance Management","Microsoft Applications","Trello","Project Management","LinkedIn","Facebook","Security","Twitter","NodeJS","Javascript","CSS","Agile"];
 
     $scope.interestSelection = [];
 
@@ -374,12 +385,13 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     $scope.isStaff;
     var myDataPromise = Program_Control.getData();
     $scope.noPrograms;
+    $scope.registeredPrograms=[];
 
     myDataPromise.then(function(result) {  
       $scope.All_Programs = result;
       $scope.noPrograms = ($scope.All_Programs.length == 0);       
       console.log($scope.All_Programs);
-      console.log("There are no programs now : " + $scope.noPrograms);
+      //console.log("There are no programs now : " + $scope.noPrograms);
     });
 
     $scope.go_program_detail=function(program){
@@ -389,6 +401,14 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
 
 
       $state.go('learnFasterMentoring');
+    }
+
+    $scope.go_participant_detail=function(participant){
+      Data.set_current_participantID(participant.participantId);
+      Data.set_current_registeredProgram(participant);
+      //console.log(participant.participantId);
+
+      $state.go('chooseTopthree');
     }
 
     $scope.go_cohort_editing=function(program){
@@ -422,7 +442,6 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     $scope.learnFaster=Data.get_isregistered_learnFatser();
     $scope.Accelerates=Data.get_isregistered_Accelerates();
     $scope.manage=Data.get_isregistered_manage();
-    $scope.nonRegistered = !($scope.learnFaster && $scope.Accelerates && $scope.nonRegistered);
 
     $scope.learnFasterctrl=function(){
         Data.set_current_program("LearnFaster");
@@ -448,13 +467,18 @@ function ($stateParams,$rootScope,$state,$localStorage,Data,$http,Program_Contro
     var req = {
           method: 'GET',
           url: "https://api.dev.mbell.me/participant/" ,
-        };
+    };
 
-        $http(req).then(function(res){
-          console.log(res);
-        },function(res){
-        console.log(res);
-        });
+    $http(req).then(function(res){
+      for(var i = 0; i < res.data.length; i++){
+        $scope.registeredPrograms.push(res.data[i]);
+      }
+      console.log($scope.registeredPrograms);
+      $scope.nonRegistered = $scope.registeredPrograms.length == 0;
+      //console.log("Registered in any programs " + $scope.nonRegistered);
+    },function(res){
+      console.log(res);
+    });
 
 }])
  
@@ -932,7 +956,7 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
     $scope.roleType=String(Data.show_mentype());
     $scope.isMentor= ($scope.roleType)==='mentor' ? true : false;
     console.log($scope.isMentor);
-    $scope.test1=["Leadership","Security","Big data and analytics","Performance management","Microsoft Applications"];
+    $scope.test1=["Leadership","Career Development","Big data analytics","Performance Management","Microsoft Applications","Trello","Project Management","LinkedIn","Facebook","Security","Twitter","NodeJS","Javascript","CSS","Agile"];
     
     $scope.gohome=function(){   //submit the data
         console.log($localStorage.token);
@@ -961,20 +985,12 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
         };
 
         $http(req).then(function(res){
-          console.log(res);
-          Data.set_current_participantID(res.data.participantId);
-          console.log(Data.get_current_participantID());
+          Data.clear_selection();
+          console.log($scope.Final_Data);
           $state.go('home');
         },function(res){
-        console.log(res);
+          console.log(res);
         });
-
-
-
-
-
-
-
  
     }
      
@@ -1023,22 +1039,53 @@ function ($scope, $stateParams,$state,Data,Mentorship_program,$localStorage,$htt
 function($scope,Data,$http,$state){
 
       var participantID=Data.get_current_participantID();
-      console.log(participantID);
+      // Get the current program user is registered for
+      $scope.currentRegisteredProgram = Data.get_current_registeredProgram();
+      $scope.isMentor = $scope.currentRegisteredProgram.isMentor;
+      $scope.isMatched = $scope.currentRegisteredProgram.isMatched;
+      // Check if there is top 3 mentors
+      $scope.topThreePresent;
+      $scope.topThreeMentors = [];
+      console.log($scope.currentRegisteredProgram);
+      var mentorOne;
+      var mentorTwo;
+      var mentorThree;
+
+      $scope.setMentorOne = function(mentor) {
+        console.log(mentor);
+      }
+
+      $scope.setMentorTwo = function(mentor) {
+        console.log(mentor);
+      }
+
+      $scope.setMentorThree = function(mentor) {
+        console.log(mentor);
+      }
 
       $scope.getback=function(){
         $state.go('home');
       }
 
+      var topThreeReq = {
+         method: 'GET',
+         url: "https://api.dev.mbell.me/participant/" + participantID + "/topThree" ,
+      };
 
+      $http(topThreeReq).then(function(res){
+        console.log(res);
+        for(var i = 0; i < res.data.length; i++){
+          $scope.topThreeMentors.push(res.data[i]);
+        }
+        $scope.topThreePresent = $scope.topThreeMentors.length;
+      },function(res){
+        console.log(res);
+        $scope.topThreePresent = false;
+      });
 
-      // $scope.submitChoice(){
-
-      // }
-
-
-
-
-
+      $scope.submitChoice=function(){
+        console.log(mentorOne + " " + mentorTwo + " " + mentorThree + " ");
+      }
 
 
 }])

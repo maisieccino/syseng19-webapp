@@ -1,4 +1,4 @@
-<ion-view title="Choose your mentors" id="page10">
+<ion-view title="Current Status" id="page10">
   <ion-nav-buttons side="left" class="has-header">
     <button class="button button-icon icon ion-arrow-left-c" ng-click='getback()'></button>
   </ion-nav-buttons>
@@ -6,26 +6,93 @@
     <div class="card" id="register-card">
     <div class="item">
       <div class="spacer" style="height: 16px;"></div>
-      <p class="title-name" style="text-align: center; font-size: 19px;">Choose top three mentors you like </p>
-      <div class="spacer" style="height: 16px;"></div>
+      <p class="title-name" style="text-align: center; font-size: 19px;">{{currentRegisteredProgram.cohort.programme.name}}</p><br>
+      <p class="title-name" style="text-align: center; font-size: 16px;">Your Status</p>
 
+      <div class="spacer" style="height: 5px;"></div>
 
-      <form id="register-form1" name="choosetop3form" >  <!-- 表单 -->
-        <!-- card -->
-
-        <div class="card list" >
-          <ion-list id="register-list1">
-            <ion-list radio-group  id="registerProgram-form12" class="list" ng-model="mymentype" >
-              <ion-radio id="registerProgram-radio6"  ng-model="mymentype" value="mentee" ng-click="seta()" checked="false">Mentor1
-              </ion-radio>
-            </ion-list> 
-          </ion-list>
-        </div>  
-
-        <!-- 结束card --> 
-
-        <a ng-click="submitChoice()" id="registerProgram-button60" class="button button-positive button-block"><i class="icon ion-edit"></i> Submit Your Choice!</a>
-      </form>
+      <div ng-if="isMentor" class="card">
+        <div class="item item-divider" style="background-color: #cfdef8;">
+          You have registered as a mentor
+        </div>
+        <div ng-if="!isMatched">
+          <div class="item item-text-wrap">
+            <p style="text-align: center; font-size: 40px;"><i class="icon ion-load-a"></i></p>
+            <p style="text-align: center;">We are still finding the best mentee for you!</p>
+            <p style="text-align: center;">Check status again closer to the match date!</p>
+          </div>  
+        </div>
+      </div>
+      <!-- Only show this section if the participant is a mentee! -->
+      <div ng-if="!isMentor">
+        <!-- Only show if top three is present -->
+        <form id="register-form1" name="choosetop3form" ng-if="topThreePresent">  <!-- 表单 -->
+          <!-- card -->
+          <div class="card">
+            <div class="item item-divider" style="background-color: #cfdef8;">
+              Your top 3 mentors!
+            </div>
+            <div class="item item-text-wrap">
+              <div class="card list">
+                <div class="item item-text-wrap">
+                  <p>Name: <strong>Mike Smith</strong></p>
+                  <p>Position: <strong>Software Engineer</strong></p>
+                </div> 
+              </div>
+              <div class="card list">
+                <div class="item item-text-wrap">
+                  <p>Name: <strong>Mike Smith</strong></p>
+                  <p>Position: <strong>Software Engineer</strong></p>
+                </div> 
+              </div>
+              <div class="card list">
+                <div class="item item-text-wrap">
+                  <p>Name: <strong>Mike Smith</strong></p>
+                  <p>Position: <strong>Software Engineer</strong></p>
+                </div> 
+              </div>
+            </div>
+          </div>
+          <div class="list">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Mentor 1
+              </div>
+              <select ng-model="mentorOne" ng-change="setMentorOne(mentorOne)">
+                <option ng-repeat="mentor in topThreeMentors" value="{{mentor}}">{{mentor}}</option>
+              </select>
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Mentor 2
+              </div>  
+              <select ng-model="mentorTwo" ng-change="setMentorTwo(mentorTwo)">
+                <option ng-repeat="mentor in topThreeMentors"  value="{{mentor}}">{{mentor}}</option>
+              </select>
+            </label>
+            <label class="item item-input item-select">
+              <div class="input-label">
+                Mentor 3
+              </div>  
+              <select ng-model="mentorThree" ng-change="setMentorThree(mentorThree)">
+                <option ng-repeat="mentor in topThreeMentors"  value="{{mentor}}">{{mentor}}</option>
+              </select>
+            </label>  
+          </div>            
+          <!-- 结束card --> 
+          <a ng-click="submitChoice()" id="registerProgram-button60" class="button button-positive button-block"><i class="icon ion-edit"></i> Submit Your Choice!</a>
+        </form>
+        <div ng-if="!isMatched" class="card">
+          <div class="item item-divider" style="background-color: #cfdef8;">
+            You have registered as a mentee
+          </div>
+          <div class="item item-text-wrap">
+            <p style="text-align: center; font-size: 40px;"><i class="icon ion-load-a"></i></p>
+            <p style="text-align: center;">We are still finding the best mentors for you!</p>
+            <p style="text-align: center;">Check status again closer to the match date!</p>
+          </div>  
+        </div>
+      </div>
 
     </div>
   </ion-content>

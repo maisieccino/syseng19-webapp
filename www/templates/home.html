@@ -7,13 +7,29 @@
       <div class="item item-divider" style="background-color: #cfdef8;">
         You are currently enrolled in
       </div>
+      <!-- If not registered in any programs -->
       <div ng-if="nonRegistered">
         <div class="item item-text-wrap">
           <p style="text-align: center; font-size: 40px;"><i class="icon ion-android-alert"></i></p>
           <p style="text-align: center;">You are not enrolled in any mentorship programs.</p>
         </div>  
       </div>
-
+      <!-- If registered in programs -->
+      <div ng-repeat="registeredProgram in registeredPrograms" >
+        <div class="item item-image" >
+          <img ng-src='img/program-banner.jpg' />
+          <div class='program-caption'>    
+            <p class='program-caption-content' style="color: white;"><strong>{{registeredProgram.cohort.programme.name}}</strong></p>    
+          </div>  
+        </div>
+        <!-- Print out status of currently registered programs -->
+        <div class="item item-text-wrap">
+          <h2>You have registered as a <strong>{{registeredProgram.isMentor ? "Mentor" : "Mentee"}}</strong></h2>
+          <p>Your status is currently <strong>{{registeredProgram.isMatched ? "Matched!" : "Awaiting Match..."}}</strong></p>
+          <!-- Here we ask users to go to choose top 3 mentors if there are any -->
+          <a class="button button-block button-positive button-outline" ng-click="go_participant_detail(registeredProgram)" >Check Status</a>  
+        </div>
+      </div>
 
 
     </div>

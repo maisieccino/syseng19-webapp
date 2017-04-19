@@ -18,7 +18,7 @@
             <i class="icon ion-search placeholder-icon"></i>
             <input type="search" placeholder="Search Tags" ng-model="search">
           </label>
-          <ion-checkbox ng-repeat="interests in test1 | filter: search" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="judgeSelection(interests) " >{{interests}}</ion-checkbox> 
+          <ion-checkbox ng-repeat="interests in test1 | filter: search |limitTo:4" value="{{interests}}" ng-click="toggleSelection(interests)" ng-checked="judgeSelection(interests) " >{{interests}}</ion-checkbox> 
         </div>  <!-- 结束card -->
         <div class="card list" >
           <div class="item item-divider" style="background-color: #cfdef8 ;text-align: center; "><i class="icon ion-ios-telephone"></i> Contact types</div>
